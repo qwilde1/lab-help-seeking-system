@@ -34,18 +34,48 @@
 			$password = "00001094499";
 			$dbname = "sdb_qwilde";
 
+			//create connection
+			$conn = new mysqli($servername, $username, $password, $dbname);
+
+			// Check connection
+			if ($conn->connect_error) {
+			    die("Connection failed: " . $conn->connect_error);
+			} 
+			echo "Connected to Database Server";
+
+
 			//Check login info, if legitimate, go on to TA dashboard
 			function checkLogin()
 			{
+				global $conn;
 				if(isset($_POST["taid"]))
 				{
-					//TODO: Check Database for TAID
-					//ALWAYS USE PREPARED STATEMENTS WHEN SENDING USER
-					//	INPUT TO A MYSQL PROMPT
+					if($_POST["taid"] != "admin")
+					{
+						//TODO: Check Database for TAID
+						//ALWAYS USE PREPARED STATEMENTS WHEN SENDING USER
+						//	INPUT TO A MYSQL PROMPT
+					}
+					else
+					{
+						//TODO: Verify admin password
+						$stmt = "SELECT password FROM user WHERE username =\"admin\"";
+						$result = $conn->query($stmt);
+						$result = $result->fetch_assoc();
+						if($result["password"] == $_POST["tapw"])
+						{
+							header("location: admin.php");
+						}
+						else
+						{
+							echo "<b></br>Incorrect username or password</b>";
+						}
+
+					}
 				}
 				else
 				{
-					echo "Please enter a username</br>";
+					echo "</br>Please enter a username</br>";
 				}
 
 				if(isset($_POST["tapw"]))
@@ -60,7 +90,9 @@
 					echo "Please enter a password";
 				}
 			}
+
 			checkLogin();
+			$conn->close();
 		?>
 
 	</BODY>
