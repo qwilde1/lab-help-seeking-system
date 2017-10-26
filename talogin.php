@@ -59,11 +59,12 @@
 					else
 					{
 						//TODO: Verify admin password
-						$stmt = "SELECT password FROM user WHERE username =\"admin\"";
+						$stmt = $conn->prepare("SELECT * FROM user WHERE username =\"admin\"");
 						$result = $conn->query($stmt);
 						$result = $result->fetch_assoc();
 						if($result["password"] == $_POST["tapw"])
 						{
+							$_POST["userId"]= $result["userId"];
 							header("location: admin.php");
 						}
 						else
