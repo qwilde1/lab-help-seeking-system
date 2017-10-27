@@ -39,6 +39,9 @@
 			{
 				if(isset($_POST["sessid"]))
 				{
+					$_POST["studentName"] = $_POST["studname"];
+					$_POST["sessionId"] = $_POST["sessid"];
+					$_POST["s"]
 					//TODO: Check Database for TAID
 					//ALWAYS USE PREPARED STATEMENTS WHEN SENDING USER
 					//	INPUT TO A MYSQL PROMPT

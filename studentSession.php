@@ -2,14 +2,15 @@
 <html>
 	<body>
 
-		<h1>Hello User</h1>
-		<h2>Session: Lab1</h2>
+		<h1>Hello <?php echo $_POST["studentName"] ?></h1>
+		<h2>Session: <?php echo $_POST["sessionId"] ?></h2>
 
 		<div class="queue" style="padding:20px">
 			<table>
 				<tr>
 					<th>questionData</th>
 					<th>studentName</th>
+					<th>resolved</th>
 				</tr>
 			</table>
 		</div>
@@ -69,6 +70,14 @@
 					$result = $conn->query($stmt);
 					$result = $result->fetch_assoc();
 					echo $result;
+
+					while($row = $result->fetch_assoc()){
+						echo "<tr>"
+						echo "<td> $row['questionData'] </td>"
+						echo "<td> $row['studentName'] </td>"
+						echo "<td> $row['resolved'] </td>"
+						echo "</tr>"
+					}
 
 				}
 				getQueue();
