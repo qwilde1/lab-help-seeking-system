@@ -65,6 +65,7 @@
 						if($result["password"] == $_POST["tapw"])
 						{
 							$_POST["userId"]= $result["userId"];
+							$_POST["username"]= $result["username"];
 							header("location: admin.php");
 						}
 						else

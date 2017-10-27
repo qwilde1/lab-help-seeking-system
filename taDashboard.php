@@ -75,6 +75,7 @@
 						//TODO
 						//Possibly add session information to the POST array??
 						$_POST["sessionId"]=$result["sessionId"];
+						$_POST["sessionName"]=$result["sessionName"];
 						header("location: taSession.php");
 					}
 					else {
