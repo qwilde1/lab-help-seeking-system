@@ -55,6 +55,29 @@
 						//TODO: Check Database for TAID
 						//ALWAYS USE PREPARED STATEMENTS WHEN SENDING USER
 						//	INPUT TO A MYSQL PROMPT
+						$stmt = $conn->prepare("SELECT * FROM user WHERE username = ?");
+						$sql->bind_param("s", $_POST["taid"]);
+						$result = $conn->query($stmt);
+						$result = $result->fetch_assoc();
+						if(!$result){
+							echo "user does not exist";
+						}
+						else {
+							if(isset($_POST["tapw"]))
+							{
+								if($result["password"] == $_POST["tapw"]) {
+									header("location: taDashboard.php");
+									echo "successful login";
+								}	
+								else {
+									echo "incorrect password";
+								}
+							}
+							else
+							{
+								echo "Please enter a password";
+							}
+						}
 					}
 					else
 					{
@@ -80,17 +103,6 @@
 					echo "</br>Please enter a username</br>";
 				}
 
-				if(isset($_POST["tapw"]))
-				{
-					//TODO: Check Database for TAID and that TAPW matches
-					//ALWAYS USE PREPARED STATEMENTS WHEN SENDING USER
-					//	INPUT TO A MYSQL PROMPT
-				}
-
-				else
-				{
-					echo "Please enter a password";
-				}
 			}
 
 			checkLogin();
