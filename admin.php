@@ -47,16 +47,18 @@
 					$newta = $_POST["newtaid"];
 					$newpw = $_POST["newtapw"];
 					$stmt->execute();
-
+					echo "</br><b>New TA added</b>";
 					//insert default session for this ta
-					$stmt = "SELECT userId FROM user WHERE username=\"$newta\"";
+					$stmt = $conn->prepare("SELECT userId FROM user WHERE username=?");
+					$stmt->bind_param("s", $newta);
 					$stmt->execute();
 					$result = $stmt->get_result();
 					$result = $result->fetch_assoc();
 					$userId = $result["userId"];
-					$stmt = $conn->prepare("INSERT INTO labsessions(accessCode, dateCreated, sessionName, status, userId) VALUES(\"default\", CURDATE(), \"Default Session\", 1, ?)");
+					$stmt = $conn->prepare("INSERT INTO labsessions(accessCode, dateCreated, sessionName, status, userId) VALUES(\"". rand(0,time()) ."\", CURDATE(), \"Default Session\", 1, ?)");
 					$stmt->bind_param("s", $userId);
 					$stmt->execute();
+					
 				}
 			}
 

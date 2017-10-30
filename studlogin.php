@@ -1,4 +1,7 @@
-
+<?php
+// Start the session
+session_start();
+?>
 <HTML>
 	<HEAD>
 		<TITLE>TA Help Seek - Student Login Page</TITLE>
@@ -11,7 +14,7 @@
 		<table ALIGN=CENTER>
 			<tr>
 			  <td>
-			    <input id="sessid" name="sessid" type="text" placeholder="Session ID"/>
+			    <input id="accessCode" name="accessCode" type="text" placeholder="Access Code"/>
 			  </td>
 			</tr>
 			<tr>
@@ -34,21 +37,45 @@
 			$password = "00001094499";
 			$dbname = "sdb_qwilde";
 
+			//create connection
+			$conn = new mysqli($servername, $username, $password, $dbname);
+
+			// Check connection
+			if ($conn->connect_error) {
+			    die("Connection failed: " . $conn->connect_error);
+			} 
+			echo "Connected to Database Server";
+			
 			//Check login info, if legitimate, go on to TA dashboard
 			function checkSessionID()
 			{
-				if(isset($_POST["sessid"]))
+				global $conn;
+				if(isset($_POST["accessCode"]) && $_POST["accessCode"] != "")
 				{
-					$_POST["studentName"] = $_POST["studname"];
-					$_POST["sessionId"] = $_POST["sessid"];
-					$_POST["s"]
-					//TODO: Check Database for TAID
+					
+					$stmt = $conn->prepare("SELECT * FROM labsessions WHERE accessCode = ?");
+					$stmt->bind_param("s", $_POST["accessCode"]);
+					$stmt->execute();
+					$result = $stmt->get_result();
+					$result = $result->fetch_assoc();
+					if(sizeof($result) == 0)
+					{
+						echo "</br><b>Lab session not found</b>";
+					}
+					else
+					{
+						$_SESSION["studentName"] = $_POST["studname"];
+						$_SESSION["sessionId"] = $result["sessionId"];
+						$_SESSION["sessionName"] = $result["sessionName"];
+						header("location: studentSession.php");
+					}
+					//TODO: Check Database for 
 					//ALWAYS USE PREPARED STATEMENTS WHEN SENDING USER
 					//	INPUT TO A MYSQL PROMPT
 				}
 				else
 				{
-					echo "Please enter the session ID you want to see.</br>";
+					echo "</br>Please enter the session ID you want to see.</br>";
 				}
 
 			}
