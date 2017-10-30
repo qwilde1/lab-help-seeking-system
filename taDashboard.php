@@ -89,9 +89,8 @@
 
 
 			}
-			gotoSession();
+			//gotoSession();
 			conn->close();
-
 
 		?>
 

@@ -57,7 +57,9 @@
 						//	INPUT TO A MYSQL PROMPT
 						$stmt = $conn->prepare("SELECT * FROM user WHERE username = ?");
 						$stmt->bind_param("s", $_POST["taid"]);
-						$result = $conn->query($stmt);
+						$stmt->execute();
+						$result = $stmt->get_result();
+						//$result = $conn->query($stmt);
 						$result = $result->fetch_assoc();
 						if(!$result){
 							echo "user does not exist";
