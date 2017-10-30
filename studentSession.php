@@ -12,6 +12,33 @@
 					<th>studentName</th>
 					<th>resolved</th>
 				</tr>
+				<?php
+					$conn = new mysqli($servername, $username, $password, $dbname);
+
+					// Check connection
+					if ($conn->connect_error) {
+					    die("Connection failed: " . $conn->connect_error);
+					} 
+					echo "Connected successfully";
+					$sql = $conn->prepare("SELECT questionData, studentName FROM questions WHERE sessionId = ? and resolved = 0");
+					$sql->bind_param("s", $_POST["sessionId"]);
+					$result = $conn->query($sql);
+					$result = $result->fetch_assoc();
+					if ($result->num_rows > 0) {
+					    // output data of each row
+					    while($row = $result->fetch_assoc()){
+					    	?>
+							<tr>
+							<td><?php $row['questionData'] ?></td>
+							<td><?php $row['studentName'] ?></td>
+							<td><?php $row['resolved'] ?></td>
+							</tr>
+							<?php
+						}
+					} else {
+					    echo "Empty Queue";
+					}
+				?>
 			</table>
 		</div>
 		<div class="studentInput" style="padding:20px">
@@ -39,30 +66,6 @@
 			echo "Connected successfully";
 
 
-			//TODO FUNCTION
-			//get the queue for this particular session
-			function getQueue(){
-				global $conn;
-				$sql = $conn->prepare("SELECT questionData, studentName FROM questions WHERE sessionId = ? and resolved = 0");
-				$sql->bind_param("s", $_POST["sessionId"]);
-				$result = $conn->query($sql);
-				$result = $result->fetch_assoc();
-				if ($result->num_rows > 0) {
-				    // output data of each row
-				    while($row = $result->fetch_assoc()){
-				    	?>
-						<tr>
-						<td><?php $row['questionData'] ?></td>
-						<td><?php $row['studentName'] ?></td>
-						<td><?php $row['resolved'] ?></td>
-						</tr>
-						<?php
-					}
-				} else {
-				    echo "Empty Queue";
-				}
-
-			}
 
 			//TODO FUNCTION
 			//insert new quesiton into the queue
