@@ -82,7 +82,7 @@
 					else
 					{
 						//TODO: Verify admin password
-						$stmt = $conn->prepare("SELECT * FROM user WHERE username =\"admin\"");
+						$stmt = "SELECT * FROM user WHERE username =\"admin\"";
 						$result = $conn->query($stmt);
 						$result = $result->fetch_assoc();
 						if($result["password"] == $_POST["tapw"])

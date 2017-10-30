@@ -49,7 +49,7 @@
 					$stmt->execute();
 
 					//insert default session for this ta
-					$stmt = $conn->prepare("SELECT userId FROM user WHERE username=\"$newta\"");
+					$stmt = "SELECT userId FROM user WHERE username=\"$newta\"";
 					$stmt->execute();
 					$result = $stmt->get_result();
 					$result = $result->fetch_assoc();
