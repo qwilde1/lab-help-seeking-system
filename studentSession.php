@@ -15,7 +15,7 @@ session_start();
 					<th>studentName</th>
 					<th>resolved</th>
 				</tr>
-
+				<?php isplayQuestions(); ?>
 			</table>
 		</div>
 		<div class="studentInput" style="padding:20px">
@@ -78,11 +78,17 @@ session_start();
 				$result = $sql->get_result();
 				$result = $result->fetch_assoc();
 				//GENERATE TABLE
+				while($row -> $result->fetch_assoc()){
+					echo "<tr>";
+					echo "<td>$row["studentName"]</td>";
+					echo "<td>$row["questionData"]</td>";
+					echo "</tr>";
+				}
+
 			}
 
 			//TODO FUNCTION 
 			//resolve a question in the queue
-
 
 		?>
 
