@@ -56,7 +56,7 @@
 						//ALWAYS USE PREPARED STATEMENTS WHEN SENDING USER
 						//	INPUT TO A MYSQL PROMPT
 						$stmt = $conn->prepare("SELECT * FROM user WHERE username = ?");
-						$sql->bind_param("s", $_POST["taid"]);
+						$stmt->bind_param("s", $_POST["taid"]);
 						$result = $conn->query($stmt);
 						$result = $result->fetch_assoc();
 						if(!$result){
