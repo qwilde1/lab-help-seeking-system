@@ -24,22 +24,22 @@
 
 			//TODO FUNCTION
 			//get the queue for this particular session
-			function getQueue(){
-				$sql = $conn->prepare("SELECT questionData, studentName FROM questions WHERE sessionId = ? and resolved = 0");
-				$sql->bind_param("s", $_POST["sessionId"]);
-				$result = $conn->query($sql);
-				$result = $result->fetch_assoc();
-				if ($result->num_rows > 0) {
-				    // output data of each row
-				    while($row = $result->fetch_assoc()) {
-				    	$tempName = $row["studentName"];
-				    	$tempQuestion = $row["questionData"];
-				    	$resolved = $row["resolved"];
-				    }
-				} else {
-				    echo "Empty Queue";
-				}
-			}
+			// function getQueue(){
+			// 	$sql = $conn->prepare("SELECT questionData, studentName FROM questions WHERE sessionId = ? and resolved = 0");
+			// 	$sql->bind_param("s", $_POST["sessionId"]);
+			// 	$result = $conn->query($sql);
+			// 	$result = $result->fetch_assoc();
+			// 	if ($result->num_rows > 0) {
+			// 	    // output data of each row
+			// 	    while($row = $result->fetch_assoc()) {
+			// 	    	$tempName = $row["studentName"];
+			// 	    	$tempQuestion = $row["questionData"];
+			// 	    	$resolved = $row["resolved"];
+			// 	    }
+			// 	} else {
+			// 	    echo "Empty Queue";
+			// 	}
+			// }
 
 			//TODO FUNCTION 
 			//resolve a question in the queue

@@ -49,11 +49,15 @@
 				$result = $result->fetch_assoc();
 				if ($result->num_rows > 0) {
 				    // output data of each row
-				    while($row = $result->fetch_assoc()) {
-				    	$tempName = $row["studentName"];
-				    	$tempQuestion = $row["questionData"];
-				    	$resolved = $row["resolved"];
-				    }
+				    while($row = $result->fetch_assoc()){
+				    	?>
+						<tr>
+						<td><?php $row['questionData'] ?></td>
+						<td><?php $row['studentName'] ?></td>
+						<td><?php $row['resolved'] ?></td>
+						</tr>
+						<?php
+					}
 				} else {
 				    echo "Empty Queue";
 				}
@@ -70,14 +74,6 @@
 					$result = $conn->query($stmt);
 					$result = $result->fetch_assoc();
 					echo $result;
-
-					while($row = $result->fetch_assoc()){
-						echo "<tr>"
-						echo "<td> $row['questionData'] </td>"
-						echo "<td> $row['studentName'] </td>"
-						echo "<td> $row['resolved'] </td>"
-						echo "</tr>"
-					}
 
 				}
 				getQueue();
