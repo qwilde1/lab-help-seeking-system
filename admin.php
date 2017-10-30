@@ -4,6 +4,7 @@
 	</HEAD>
 	<BODY>
 		<h1 align=center>Admin Page</h1>
+		<a align=right href="talogin.php">Go back to TA login page</a>
 		<form action="admin.php" method="post">
 		<table align=center>
 			<tr><td><input id="newtaid" name="newtaid" type="text" placeholder="New TA Username"/></td></tr>
