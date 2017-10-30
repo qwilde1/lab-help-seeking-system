@@ -13,6 +13,11 @@
 					<th>resolved</th>
 				</tr>
 				<?php
+					//DB info
+					$servername = "dbserver.engr.scu.edu";
+					$username = "qwilde";
+					$password = "00001094499";
+					$dbname = "sdb_qwilde";
 					$conn = new mysqli($servername, $username, $password, $dbname);
 
 					// Check connection
