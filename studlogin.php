@@ -1,6 +1,6 @@
 <?php
-// Start the session
-session_start();
+	// Start the session
+	session_start();
 ?>
 <HTML>
 	<HEAD>

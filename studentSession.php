@@ -1,6 +1,18 @@
 <?php
 // Start the session
 session_start();
+//DB info
+$servername = "dbserver.engr.scu.edu";
+$username = "qwilde";
+$password = "00001094499";
+$dbname = "sdb_qwilde";
+
+//create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+	die("Connection failed: " . $conn->connect_error);
+} 
+echo "Connected successfully";
 ?>
 <html>
 	<body>
@@ -13,9 +25,8 @@ session_start();
 				<tr>
 					<th>questionData</th>
 					<th>studentName</th>
-					<th>resolved</th>
 				</tr>
-				<?php isplayQuestions(); ?>
+				<?php displayQuestions() ?>
 			</table>
 		</div>
 		<div class="studentInput" style="padding:20px">
@@ -28,19 +39,19 @@ session_start();
 		
 		<?php
 			//DB info
-			$servername = "dbserver.engr.scu.edu";
-			$username = "qwilde";
-			$password = "00001094499";
-			$dbname = "sdb_qwilde";
+			//$servername = "dbserver.engr.scu.edu";
+			//$username = "qwilde";
+			//$password = "00001094499";
+			//$dbname = "sdb_qwilde";
 
 			//create connection
-			$conn = new mysqli($servername, $username, $password, $dbname);
+			//$conn = new mysqli($servername, $username, $password, $dbname);
 
 			// Check connection
-			if ($conn->connect_error) {
-			    die("Connection failed: " . $conn->connect_error);
-			} 
-			echo "Connected successfully";
+			//if ($conn->connect_error) {
+			    //die("Connection failed: " . $conn->connect_error);
+			//} 
+			//echo "Connected successfully";
 
 			if(isset($_POST["questionData"]))
 			{
@@ -72,16 +83,17 @@ session_start();
 
 			//Call this in a php block in the HTML for the page where you want the questions to appear
 			function displayQuestions(){
-				$sql = $conn->prepare("SELECT questionData, studentName FROM questions WHERE sessionId = ? and resolved = 0 ORDER BY whenAsked");
+				global $conn;
+				$sql = $conn->prepare("SELECT * FROM questions WHERE sessionId = ? and resolved = 0");
 				$sql->bind_param("s", $_SESSION["sessionId"]);
 				$sql->execute();
 				$result = $sql->get_result();
-				$result = $result->fetch_assoc();
+				//$result = $result->fetch_assoc();
 				//GENERATE TABLE
-				while($row -> $result->fetch_assoc()){
+				while($row = $result->fetch_assoc()){
 					echo "<tr>";
-					echo "<td>$row["studentName"]</td>";
-					echo "<td>$row["questionData"]</td>";
+					echo "<td>" . $row['studentName'] . "</td>";
+					echo "<td>" . $row['questionData'] . "</td>";
 					echo "</tr>";
 				}
 
