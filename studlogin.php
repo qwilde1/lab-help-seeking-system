@@ -50,7 +50,7 @@
 			function checkSessionID()
 			{
 				global $conn;
-				if(isset($_POST["accessCode"]) && $_POST["accessCode"] != "")
+				if(isset($_POST["accessCode"]) && $_POST["accessCode"] != "" && isset($_POST["studname"]) && $_POST["studname"] != "")
 				{
 					
 					$stmt = $conn->prepare("SELECT * FROM labsessions WHERE accessCode = ?");
@@ -75,7 +75,7 @@
 				}
 				else
 				{
-					echo "</br>Please enter the session ID you want to see.</br>";
+					echo "</br>Please enter the session ID and username.</br>";
 				}
 
 			}
