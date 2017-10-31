@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<?php
+session_start();
+?>
 <html>
 	<body>
 
@@ -6,12 +8,12 @@
 		<h2>Click here to logout</h2>
 
 		<div class="newSession">
-			<form>
+			<form method="post" action="taDashboard.php">
 				<h2>Create a New Session</h2>
-				<input type="text" name="AccessCode" placeholder="Access Code">
-				<button type="button" name="generateCode" style="color:red">Generate Code</button> 
+				<input type="text" id= "AccessCode" name="AccessCode" placeholder="Access Code">
+				<button type="button" id="generateCode" name="generateCode" style="color:red">Generate Code</button> 
 				<br>
-				<input type="text" name="SessionName" placeholder="Session Name">
+				<input type="text" id="SessionName" name="SessionName" placeholder="Session Name">
 				<br>
 				<input type="submit" name="Submit">
 			</form>
@@ -42,7 +44,7 @@
 			$dbname = "sdb_qwilde";
 
 			//create connection
-			$conn = new mysqli($servername, $username, $password);
+			$conn = new mysqli($servername, $username, $password, $dbname);
 
 			// Check connection
 			if ($conn->connect_error) {
@@ -50,9 +52,34 @@
 			} 
 			echo "Connected successfully";
 
-
+			if(isset($_POST["AccessCode"]) && isset($_POST["SessionName"]))
+			{
+				createSession();
+			}
 			//TODO FUNCTION
 			//create new session in the database
+			function createSession()
+			{
+				global $conn;
+				$stmt = $conn->prepare("SELECT userId FROM user WHERE username=?");
+				$stmt->bind_param("s", $_SESSION["taid"]);
+				$stmt->execute();
+				$result = $stmt->get_result();
+				$result = $result->fetch_assoc();
+				$userId = $result["userId"];
+				$accessCode = $_POST["AccessCode"];
+				$sessionName = $_POST["SessionName"];
+				$stmt = $conn->prepare("INSERT INTO labsessions(
+							accessCode,
+							dateCreated,
+							sessionName,
+							status,
+							userId)
+							VALUES(?, CURDATE(), ?, 1, ?)");
+				$stmt->bind_param("ssi", $accessCode, $sessionName, $userId);
+				$stmt->execute();
+				echo "</br> New session created";
+			}
 
 			//TODO FUNCTION
 			//get sessions that belong to this TA
@@ -89,8 +116,9 @@
 
 
 			}
+			
 			//gotoSession();
-			conn->close();
+			$conn->close();
 
 		?>
 

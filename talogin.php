@@ -1,4 +1,6 @@
-
+<?php
+	session_start();
+?>
 <HTML>
 	<HEAD>
 		<TITLE>TA Help Seek - TA Login Page</TITLE>
@@ -52,7 +54,8 @@
 				{
 					if($_POST["taid"] != "admin")
 					{
-						//TODO: Check Database for TAID
+						$_SESSION["taid"] = $_POST["taid"];
+						//Check Database for TAID
 						//ALWAYS USE PREPARED STATEMENTS WHEN SENDING USER
 						//	INPUT TO A MYSQL PROMPT
 						$stmt = $conn->prepare("SELECT * FROM user WHERE username = ?");
