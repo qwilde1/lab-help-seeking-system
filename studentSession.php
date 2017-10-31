@@ -20,21 +20,27 @@ echo "Connected successfully";
 		<h1>Hello <?php echo $_SESSION["studentName"] ?></h1>
 		<h2>Session: <?php echo $_SESSION["sessionName"] ?></h2>
 
-		<div class="queue" style="padding:20px">
-			<table>
-				<tr>
-					<th>questionData</th>
-					<th>studentName</th>
-				</tr>
-				<?php displayQuestions() ?>
-			</table>
-		</div>
+		<?php
+			if(isset($_POST["questionData"]) && $_POST["questionData"] != "")
+			{
+				insertQuestion();
+				$_POST["questionData"];
+				$updatetext = "";
+			}
+			else
+			{
+				$updatetext = "</br><b>Type in a question before you submit it.</b>";
+			}
+			echo displayQuestions();
+			
+		?>
+		
 		<div class="studentInput" style="padding:20px">
 			<form method="post" action="studentSession.php">
 				<input type="text" id="questionData" name="questionData" placeholder="Insert Question">
 				<input type="submit" name="Submit">
 			</form>
-
+			
 		</div>
 		
 		<?php
@@ -53,23 +59,30 @@ echo "Connected successfully";
 			//} 
 			//echo "Connected successfully";
 
-			if(isset($_POST["questionData"]))
-			{
-				insertQuestion();
-			}
 
-			else
-			{
-				echo"</br><b>Type in a question before you submit it.</b>";
-			}
+			echo $updatetext;			
 
-			//TODO FUNCTION
-			//insert new question into the queue
 			function insertQuestion() {
 				global $conn;
-				$sql = $conn->prepare("INSERT INTO questions (sessionId, questionData, resolved, studentName, whenAsked) VALUES (?,?,?,?,NOW())");
+				$quickcheck = $conn->prepare("SELECT * FROM questions WHERE questionData = ?");
+				$quickcheck->bind_param("s", $questionData);
+				$questionData = $_POST["questionData"];
+				$quickcheck->execute();
+				$result = $quickcheck->get_result();
+				if($result->num_rows > 0)
+				{
+					echo "</br><b>That question has already been asked.</b>";
+					return;
+				}
+				$sql = $conn->prepare("INSERT INTO questions 
+						(sessionId, 
+						questionData,
+						resolved,
+						studentName,
+						whenAsked) 
+						VALUES (?,?,?,?,NOW())");
 				$sql->bind_param("ssis", $sessionId, $questionData, $resolvedNum, $studentName);
-
+				
 				$sessionId = $_SESSION["sessionId"];
 				$questionData = $_POST["questionData"];
 				$resolvedNum = 0;
@@ -84,19 +97,27 @@ echo "Connected successfully";
 			//Call this in a php block in the HTML for the page where you want the questions to appear
 			function displayQuestions(){
 				global $conn;
+				$tableHTML = "<div class=\"queue\" style=\"padding:20px\">
+						<table border=\"1\">
+							<tr>
+								<th>Student</th>
+								<th>Question</th>
+							</tr>";
 				$sql = $conn->prepare("SELECT * FROM questions WHERE sessionId = ? and resolved = 0");
 				$sql->bind_param("s", $_SESSION["sessionId"]);
 				$sql->execute();
 				$result = $sql->get_result();
-				//$result = $result->fetch_assoc();
-				//GENERATE TABLE
 				while($row = $result->fetch_assoc()){
-					echo "<tr>";
-					echo "<td>" . $row['studentName'] . "</td>";
-					echo "<td>" . $row['questionData'] . "</td>";
-					echo "</tr>";
+					$tableHTML .=  "<tr>";
+					$tableHTML .=  "<td>" . $row['studentName'] . "</td>";
+					$tableHTML .=  "<td>" . $row['questionData'] . "</td>";
+					$tableHTML .=  "</tr>";
 				}
-
+				$tableHTML .= "</table>
+					</div>";
+				if($result->num_rows == 0)
+					$tableHTML = "</br>There are no questions in this session yet";
+				return $tableHTML;
 			}
 
 			//TODO FUNCTION 

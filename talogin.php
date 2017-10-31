@@ -72,12 +72,12 @@
 									echo "successful login";
 								}	
 								else {
-									echo "incorrect password";
+									echo "<b></br>Incorrect username or password</b>";
 								}
 							}
 							else
 							{
-								echo "Please enter a password";
+								echo "</br>Please enter a password";
 							}
 						}
 					}

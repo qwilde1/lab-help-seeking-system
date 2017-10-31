@@ -41,6 +41,15 @@
 				else
 				{
 					global $conn;
+					$quickcheck = $conn->prepare("SELECT * FROM user WHERE username = ?");
+					$quickcheck->bind_param("s", $_POST["newtaid"]);
+					$quickcheck->execute();
+					$result = $quickcheck->get_result();
+					if($result->num_rows > 0)
+					{
+						echo "</br><b>That username is already used.</b>";
+						return;
+					}
 					//insert new TA
 					$stmt = $conn->prepare("INSERT INTO user (username, password) VALUES(?, ?)");
 					$stmt->bind_param("ss", $newta, $newpw);
