@@ -3,9 +3,8 @@ session_start();
 ?>
 <html>
 	<body>
-
-		<h1>Hello User</h1>
-		<h2>Click here to logout</h2>
+		</br><a align=right href="talogin.php">Return to TA login page</a>
+		<h1>Hello <?php echo $_SESSION["taid"]; ?></h1>
 
 		<div class="newSession">
 			<form method="post" action="taDashboard.php">
