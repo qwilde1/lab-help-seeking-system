@@ -3,8 +3,8 @@
 		<TITLE>TA Help Seek - Admin</TITLE>
 	</HEAD>
 	<BODY>
-		<h1 align=center>Admin Page</h1>
 		<a align=right href="talogin.php">Go back to TA login page</a>
+		<h1 align=center>Admin Page</h1>		
 		<form action="admin.php" method="post">
 		<table align=center>
 			<tr><td><input id="newtaid" name="newtaid" type="text" placeholder="New TA Username"/></td></tr>
@@ -64,9 +64,11 @@
 					$result = $stmt->get_result();
 					$result = $result->fetch_assoc();
 					$userId = $result["userId"];
-					$stmt = $conn->prepare("INSERT INTO labsessions(accessCode, dateCreated, sessionName, status, userId) VALUES(\"". rand(0,time()) ."\", CURDATE(), \"Default Session\", 1, ?)");
+					$acCode = "" . rand(0,time());
+					$stmt = $conn->prepare("INSERT INTO labsessions(accessCode, dateCreated, sessionName, status, userId) VALUES(\"".$acCode."\", CURDATE(), \"Default Session\", 1, ?)");
 					$stmt->bind_param("s", $userId);
 					$stmt->execute();
+					echo "</br> Default session access code for new TA: " . $acCode;
 					
 				}
 			}

@@ -16,7 +16,7 @@ echo "Connected successfully";
 ?>
 <html>
 	<body>
-
+		</br><a align=right href="studlogin.php">Return to STUDENT login page</a>
 		<h1>Hello <?php echo $_SESSION["studentName"] ?></h1>
 		<h2>Session: <?php echo $_SESSION["sessionName"] ?></h2>
 
@@ -44,29 +44,15 @@ echo "Connected successfully";
 		</div>
 		
 		<?php
-			//DB info
-			//$servername = "dbserver.engr.scu.edu";
-			//$username = "qwilde";
-			//$password = "00001094499";
-			//$dbname = "sdb_qwilde";
-
-			//create connection
-			//$conn = new mysqli($servername, $username, $password, $dbname);
-
-			// Check connection
-			//if ($conn->connect_error) {
-			    //die("Connection failed: " . $conn->connect_error);
-			//} 
-			//echo "Connected successfully";
-
 
 			echo $updatetext;			
 
 			function insertQuestion() {
 				global $conn;
-				$quickcheck = $conn->prepare("SELECT * FROM questions WHERE questionData = ?");
-				$quickcheck->bind_param("s", $questionData);
+				$quickcheck = $conn->prepare("SELECT * FROM questions WHERE questionData = ? AND sessionId = ?");
+				$quickcheck->bind_param("si", $questionData, $sessionId);
 				$questionData = $_POST["questionData"];
+				$sessionId = $_SESSION["sessionId"];
 				$quickcheck->execute();
 				$result = $quickcheck->get_result();
 				if($result->num_rows > 0)
