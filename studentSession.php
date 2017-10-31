@@ -24,7 +24,11 @@ echo "Connected successfully";
 			if(isset($_POST["questionData"]) && $_POST["questionData"] != "")
 			{
 				insertQuestion();
-				$_POST["questionData"];
+				$updatetext = "";
+			}
+			else if(isset($_POST['resolveID']) && $_POST['resolveID'] != "")
+			{
+				updateEntry();
 				$updatetext = "";
 			}
 			else
@@ -38,14 +42,25 @@ echo "Connected successfully";
 		<div class="studentInput" style="padding:20px">
 			<form method="post" action="studentSession.php">
 				<input type="text" id="questionData" name="questionData" placeholder="Insert Question">
-				<input type="submit" name="Submit">
+				<input type="submit" name="Submit" value="Submit Question">
 			</form>
 			
 		</div>
 		
 		<?php
 
-			echo $updatetext;			
+			echo $updatetext;	
+
+			function updateEntry(){
+				global $conn;
+				$quickcheck = $conn->prepare("UPDATE questions SET resolved = 1 where questionId= ?");
+				$quickcheck->bind_param("s", $questionId);
+				$questionId = $_POST["resolveID"];
+				if($quickcheck->execute()){
+					echo "</br>question resolved";
+				}
+				
+			}		
 
 			function insertQuestion() {
 				global $conn;
@@ -88,6 +103,7 @@ echo "Connected successfully";
 							<tr>
 								<th>Student</th>
 								<th>Question</th>
+								<th>Resolve</th>
 							</tr>";
 				$sql = $conn->prepare("SELECT * FROM questions WHERE sessionId = ? and resolved = 0");
 				$sql->bind_param("s", $_SESSION["sessionId"]);
@@ -97,6 +113,11 @@ echo "Connected successfully";
 					$tableHTML .=  "<tr>";
 					$tableHTML .=  "<td>" . $row['studentName'] . "</td>";
 					$tableHTML .=  "<td>" . $row['questionData'] . "</td>";
+					if($_SESSION['studentName'] == $row['studentName']){
+						$tableHTML .= "<td><form method=\"post\" action=\"studentSession.php\"><input type=\"hidden\" name=\"resolveID\" value=\"" . $row['questionId'] ."\"><input type=\"submit\" name=\"resolve\" value=\"Resolve\"></form></td>";
+					}else{
+						$tableHTML .= "<td></td>";
+					} 
 					$tableHTML .=  "</tr>";
 				}
 				$tableHTML .= "</table>
