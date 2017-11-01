@@ -1,5 +1,18 @@
 <?php
+// Start the session
 session_start();
+//DB info
+$servername = "dbserver.engr.scu.edu";
+$username = "qwilde";
+$password = "00001094499";
+$dbname = "sdb_qwilde";
+
+//create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+if ($conn->connect_error) {
+	die("Connection failed: " . $conn->connect_error);
+} 
+echo "Connected successfully";
 ?>
 <html>
 	<body>
@@ -18,31 +31,24 @@ session_start();
 			</form>
 		</div>
 		<br>
-		<form action="taDashboard.php" method="post">
+		<form method="post">
 			<h2>Access Session</h2>
-			<input type="text" id="sessionName" name="sessionName">
+			<input type="text" id="sessionInput" name="sessionInput">
 			<input type="submit" id="submit" value="Submit">
 		</form>
 		<?php
-			//DB info
-			$servername = "dbserver.engr.scu.edu";
-			$username = "qwilde";
-			$password = "00001094499";
-			$dbname = "sdb_qwilde";
-
-			//create connection
-			$conn = new mysqli($servername, $username, $password, $dbname);
-
-			// Check connection
-			if ($conn->connect_error) {
-			    die("Connection failed: " . $conn->connect_error);
-			} 
-			echo "Connected successfully";
 
 			if(isset($_POST["AccessCode"]) && isset($_POST["SessionName"]))
 			{
 				createSession();
+				getSessions();
 			}
+			if(isset($_POST["sessionInput"]))
+			{
+				gotoSession();
+			}
+			getSessions();
+
 			//TODO FUNCTION
 			//create new session in the database
 			function createSession()
@@ -106,29 +112,27 @@ session_start();
 			function gotoSession()
 			{
 				global $conn;
-				if(isset($_POST["sessionName"]))
-				{
-					$sql = $conn->prepare("SELECT * FROM labsessions WHERE sessionId = ? and userId = ?");
-					$sql->bind_param("ss", $_SESSION["sessionId"],$_SESSION["userId"]);
-					$sql->execute();
-					$result = $sql->get_result();
-					$result = $result->fetch_assoc();
-					if($result){
-						$_SESSION["sessionId"]=$result["sessionId"];
-						$_SESSION["sessionName"]=$result["sessionName"];
-						header("location: taSession.php");
-					}
-					else {
-						echo "lab session does not exist";
-
-					}
+				$sql = $conn->prepare("SELECT * FROM labsessions WHERE sessionId = ? and userId = ?");
+				$sql->bind_param("ss", $_SESSION["sessionId"],$_SESSION["userId"]);
+				$sql->execute();
+				$result = $sql->get_result();
+				$result = $result->fetch_assoc();
+				if($result){
+					$_SESSION["sessionId"]=$result["sessionId"];
+					$_SESSION["sessionName"]=$result["sessionName"];
+					header("location: taSession.php");
 				}
 				else {
-					echo "</br>insert session name</br>";
+					echo "lab session does not exist";
+
 				}
-
-
 			}
+			else {
+				echo "</br>insert session name</br>";
+			}
+
+
+			
 			
 			//gotoSession();
 			$conn->close();
