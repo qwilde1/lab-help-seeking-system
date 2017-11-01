@@ -18,23 +18,11 @@ session_start();
 			</form>
 		</div>
 		<br>
-
-		<div class="previousSessions" style="padding:20px">
-			<h2>Previous Sessions</h2>
-			<table>
-				<tr>
-					<th>Session Name</th>
-					<th>Date Created</th>
-					<th>Access Code</th>
-					<th>Status</th>
-				</tr>
-			</table>
-			<form action="taDashboard.php" method="post">
-				<h2>Access Session</h2>
-				<input type="text" id="sessionName" name="sessionName">
-				<input type="submit" id="submit" value="Submit">
-			</form>
-		</div>
+		<form action="taDashboard.php" method="post">
+			<h2>Access Session</h2>
+			<input type="text" id="sessionName" name="sessionName">
+			<input type="submit" id="submit" value="Submit">
+		</form>
 		<?php
 			//DB info
 			$servername = "dbserver.engr.scu.edu";
@@ -82,7 +70,36 @@ session_start();
 
 			//TODO FUNCTION
 			//get sessions that belong to this TA
+			function getSessions() {
+				global $conn;
+				$tableHTML = "<div class=\"sessions\" style=\"padding:20px\">
+						<table border=\"1\">
+							<tr>
+								<th>Session Name</th>
+								<th>Date Created</th>
+								<th>Access Code</th>
+								<th>Status</th>
+							</tr>";
 
+				$sql = $conn->prepare("SELECT * FROM labsessions WHERE userId = ?");
+				$sql->bind_param("s", $_SESSION["userId"]);
+				$sql->execute();
+				$result = $sql->get_result();
+				while($row = $result->fetch_assoc()) {
+					$tableHTML .=  "<tr>";
+					$tableHTML .=  "<td>" . $row['sessionName'] . "</td>";
+					$tableHTML .=  "<td>" . $row['dateCreated'] . "</td>";
+					$tableHTML .=  "<td>" . $row['accessCode'] . "</td>";
+					$tableHTML .=  "<td>" . $row['status'] . "</td>";
+					$tableHTML .=  "</tr>";
+				}
+				$tableHTML .= "</table>
+					</div>";
+				if($result->num_rows == 0)
+					$tableHTML = "</br>There are no sessions yet";
+				return $tableHTML;
+				
+			}
 
 			//TODO FUNCTION
 			//go to session page with inserted sessionName
@@ -91,17 +108,14 @@ session_start();
 				global $conn;
 				if(isset($_POST["sessionName"]))
 				{
-					//IMPORTANT TODO
-					//login page need to add userId to POST array
-					$sql = $conn->prepare("SELECT * FROM labsessions WHERE sessionName = ? and userId = ?");
-					$sql->bind_param("ss", $_POST["sessionName"],$_POST["userId"]);
-					$result = $conn->query($sql);
+					$sql = $conn->prepare("SELECT * FROM labsessions WHERE sessionId = ? and userId = ?");
+					$sql->bind_param("ss", $_SESSION["sessionId"],$_SESSION["userId"]);
+					$sql->execute();
+					$result = $sql->get_result();
 					$result = $result->fetch_assoc();
 					if($result){
-						//TODO
-						//Possibly add session information to the POST array??
-						$_POST["sessionId"]=$result["sessionId"];
-						$_POST["sessionName"]=$result["sessionName"];
+						$_SESSION["sessionId"]=$result["sessionId"];
+						$_SESSION["sessionName"]=$result["sessionName"];
 						header("location: taSession.php");
 					}
 					else {

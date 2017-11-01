@@ -94,6 +94,8 @@
 						{
 							$_POST["userId"]= $result["userId"];
 							$_POST["username"]= $result["username"];
+							$_SESSION["userId"]= $_POST["userId"];
+							$_SESSION["username"]= $_POST["username"];
 							header("location: admin.php");
 						}
 						else
