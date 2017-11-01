@@ -22,14 +22,15 @@ echo "Connected successfully";
 		<div class="newSession">
 			<form method="post" action="taDashboard.php">
 				<h2>Create a New Session</h2>
-				<input type="text" id= "AccessCode" name="AccessCode" placeholder="Access Code">
-				<button type="button" id="generateCode" name="generateCode" style="color:red">Generate Code</button> 
-				<br>
+				<input type="text" id= "AccessCode" name="AccessCode" placeholder="Access Code" value="<?php if(isset($_SESSION["setCode"]) && $_SESSION["setCode"] != ''){ echo $_SESSION["setCode"];} else { echo '';}?>">
 				<input type="text" id="SessionName" name="SessionName" placeholder="Session Name">
 				<br>
 				<input type="submit" name="Submit">
 			</form>
 		</div>
+		<form method="post" action="taDashboard.php">
+				<input type="submit" id="generateCode" name="generateCode" value="Generate Code" style="color:red">
+		</form>
 		<br>
 		<form method="post">
 			<h2>Access Session</h2>
@@ -41,11 +42,16 @@ echo "Connected successfully";
 			if(isset($_POST["AccessCode"]) && isset($_POST["SessionName"]))
 			{
 				createSession();
+				$_SESSION["setCode"]='';
 				getSessions();
 			}
 			if(isset($_POST["sessionInput"]))
 			{
 				gotoSession();
+			}
+			if(isset($_POST["generateCode"]))
+			{	
+				generateAccessCode();
 			}
 			getSessions();
 
@@ -82,6 +88,7 @@ echo "Connected successfully";
 						<table border=\"1\">
 							<tr>
 								<th>Session Name</th>
+								<th>Session Id</th>
 								<th>Date Created</th>
 								<th>Access Code</th>
 								<th>Status</th>
@@ -91,9 +98,12 @@ echo "Connected successfully";
 				$sql->bind_param("s", $_SESSION["userId"]);
 				$sql->execute();
 				$result = $sql->get_result();
+				if($result->num_rows == 0)
+					$tableHTML = "</br>There are no sessions yet";
 				while($row = $result->fetch_assoc()) {
 					$tableHTML .=  "<tr>";
 					$tableHTML .=  "<td>" . $row['sessionName'] . "</td>";
+					$tableHTML .=  "<td>" . $row['sessionId'] . "</td>";
 					$tableHTML .=  "<td>" . $row['dateCreated'] . "</td>";
 					$tableHTML .=  "<td>" . $row['accessCode'] . "</td>";
 					$tableHTML .=  "<td>" . $row['status'] . "</td>";
@@ -101,9 +111,7 @@ echo "Connected successfully";
 				}
 				$tableHTML .= "</table>
 					</div>";
-				if($result->num_rows == 0)
-					$tableHTML = "</br>There are no sessions yet";
-				return $tableHTML;
+				echo $tableHTML;
 				
 			}
 
@@ -113,13 +121,19 @@ echo "Connected successfully";
 			{
 				global $conn;
 				$sql = $conn->prepare("SELECT * FROM labsessions WHERE sessionId = ? and userId = ?");
-				$sql->bind_param("ss", $_SESSION["sessionId"],$_SESSION["userId"]);
+				$sql->bind_param("ss", $_POST["sessionInput"],$_SESSION["userId"]);
 				$sql->execute();
 				$result = $sql->get_result();
 				$result = $result->fetch_assoc();
+				$sql2 = $conn->prepare("SELECT * FROM user WHERE userId = ?");
+				$sql2->bind_param("s", $_SESSION["userId"]);
+				$sql2->execute();
+				$result2 = $sql2->get_result();
+				$result2 = $result2->fetch_assoc();
 				if($result){
 					$_SESSION["sessionId"]=$result["sessionId"];
 					$_SESSION["sessionName"]=$result["sessionName"];
+					$_SESSION["username"]=$result2["username"];
 					header("location: taSession.php");
 				}
 				else {
@@ -127,14 +141,20 @@ echo "Connected successfully";
 
 				}
 			}
-			else {
-				echo "</br>insert session name</br>";
+
+
+			//Generate random access code
+			function generateAccessCode(){
+				global $conn;
+				$quickcheck = $conn->prepare("SELECT * FROM labsessions WHERE userId = ?");
+				$quickcheck->bind_param("s", $_SESSION["userId"]);
+	    			$str = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(7/strlen($x)))),1,7);
+	    			$quickcheck->execute();
+				$result = $quickcheck->get_result();
+				$_SESSION["setCode"] = $str;
+
 			}
 
-
-			
-			
-			//gotoSession();
 			$conn->close();
 
 		?>

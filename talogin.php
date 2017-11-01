@@ -71,6 +71,8 @@
 							if(isset($_POST["tapw"]))
 							{
 								if($result["password"] == $_POST["tapw"]) {
+									$_SESSION["userId"]= $result["userId"];
+									$_SESSION["username"]= $result["username"];
 									header("location: taDashboard.php");
 									echo "successful login";
 								}	
@@ -92,10 +94,8 @@
 						$result = $result->fetch_assoc();
 						if($result["password"] == $_POST["tapw"])
 						{
-							$_POST["userId"]= $result["userId"];
-							$_POST["username"]= $result["username"];
-							$_SESSION["userId"]= $_POST["userId"];
-							$_SESSION["username"]= $_POST["username"];
+							$_SESSION["userId"]= $result["userId"];
+							$_SESSION["username"]= $result["username"];
 							header("location: admin.php");
 						}
 						else
