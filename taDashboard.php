@@ -15,7 +15,28 @@ if ($conn->connect_error) {
 echo "Connected successfully";
 ?>
 <html>
-	<body>
+	<head>
+		<script type="text/javascript">
+			function reload()
+			{
+				var req = new XMLHttpRequest();
+				console.log("Grabbing Value");
+				req.onreadystatechange=function() {
+				if (req.readyState==4 && req.status==200) {
+					document.getElementById('trulyCodesFavouriteNumber').innerText = req.responseText;
+				}
+			}
+			req.open("GET", 'reload.txt', true);
+			req.send(null);
+			}
+			function init()
+			{
+				reload()
+				var int=self.setInterval(function(){reload()},5000);
+			}
+		</script>
+	</head>
+	<body onload="init()">
 		</br><a align=right href="talogin.php">Return to TA login page</a>
 		<h1>Hello <?php echo $_SESSION["taid"]; ?></h1>
 
@@ -148,8 +169,8 @@ echo "Connected successfully";
 				global $conn;
 				$quickcheck = $conn->prepare("SELECT * FROM labsessions WHERE userId = ?");
 				$quickcheck->bind_param("s", $_SESSION["userId"]);
-	    			$str = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(7/strlen($x)))),1,7);
-	    			$quickcheck->execute();
+	    		$str = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(7/strlen($x)))),1,7);
+	    		$quickcheck->execute();
 				$result = $quickcheck->get_result();
 				$_SESSION["setCode"] = $str;
 

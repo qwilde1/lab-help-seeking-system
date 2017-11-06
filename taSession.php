@@ -15,7 +15,28 @@ if ($conn->connect_error) {
 echo "Connected successfully";
 ?>
 <html>
-	<body>
+	<head>
+		<script type="text/javascript">
+			function reload()
+			{
+				var req = new XMLHttpRequest();
+				console.log("Grabbing Value");
+				req.onreadystatechange=function() {
+				if (req.readyState==4 && req.status==200) {
+					document.getElementById('trulyCodesFavouriteNumber').innerText = req.responseText;
+				}
+			}
+			req.open("GET", 'reload.txt', true);
+			req.send(null);
+			}
+			function init()
+			{
+				reload()
+				var int=self.setInterval(function(){reload()},3000);
+			}
+		</script>
+	</head>
+	<body onload="init()">
 		</br><a align=right href="taDashboard.php">Return to Dashboard page</a>
 		<h1>Hello <?php echo $_SESSION["username"] ?></h1>
 		<h2>Session: <?php echo $_SESSION["sessionName"] ?></h2>
