@@ -78,7 +78,7 @@ echo "Connected successfully";
 					$tableHTML .=  "<tr>";
 					$tableHTML .=  "<td>" . $row['studentName'] . "</td>";
 					$tableHTML .=  "<td>" . $row['questionData'] . "</td>";
-					$tableHTML .= "<td><form method=\"post\" action=\"studentSession.php\"><input type=\"hidden\" name=\"resolveID\" value=\"" . $row['questionId'] ."\"><input type=\"submit\" name=\"resolve\" value=\"Resolve\"></form></td>";
+					$tableHTML .= "<td><form method=\"post\" action=\"taSession.php\"><input type=\"hidden\" name=\"resolveID\" value=\"" . $row['questionId'] ."\"><input type=\"submit\" name=\"resolve\" value=\"Resolve\"></form></td>";
 					$tableHTML .=  "</tr>";
 				}
 				$tableHTML .= "</table>
