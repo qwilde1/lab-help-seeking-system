@@ -54,7 +54,7 @@
 					$stmt = $conn->prepare("INSERT INTO user (username, password) VALUES(?, ?)");
 					$stmt->bind_param("ss", $newta, $newpw);
 					$newta = $_POST["newtaid"];
-					$newpw = $_POST["newtapw"];
+					$newpw = password_hash($_POST["newtapw"], PASSWORD_DEFAULT);
 					$stmt->execute();
 					echo "</br><b>New TA added</b>";
 					//insert default session for this ta

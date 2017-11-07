@@ -70,7 +70,7 @@
 						else {
 							if(isset($_POST["tapw"]))
 							{
-								if($result["password"] == $_POST["tapw"]) {
+								if(password_verify($_POST["tapw"], $result["password"])) {
 									$_SESSION["userId"]= $result["userId"];
 									$_SESSION["username"]= $result["username"];
 									header("location: taDashboard.php");
