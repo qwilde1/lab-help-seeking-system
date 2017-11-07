@@ -43,36 +43,28 @@ echo "Connected successfully";
 		<div class="newSession">
 			<form method="post" action="taDashboard.php">
 				<h2>Create a New Session</h2>
-				<input type="text" id= "AccessCode" name="AccessCode" placeholder="Access Code" value="<?php if(isset($_SESSION["setCode"]) && $_SESSION["setCode"] != ''){ echo $_SESSION["setCode"];} else { echo '';}?>">
 				<input type="text" id="SessionName" name="SessionName" placeholder="Session Name">
-				<br>
+				</br>
+				<input type="text" id= "AccessCode" name="AccessCode" placeholder="Custom Access Code (optional)">
+				</br>
 				<input type="submit" name="Submit">
 			</form>
 		</div>
-		<form method="post" action="taDashboard.php">
-				<input type="submit" id="generateCode" name="generateCode" value="Generate Code" style="color:red">
-		</form>
 		<br>
 		<form method="post">
 			<h2>Access Session</h2>
-			<input type="text" id="sessionInput" name="sessionInput">
+			<input type="text" id="sessionInput" name="sessionInput" placeholder="Access Code">
 			<input type="submit" id="submit" value="Submit">
 		</form>
 		<?php
 
-			if(isset($_POST["AccessCode"]) && isset($_POST["SessionName"]))
+			if(isset($_POST["SessionName"]) && $_POST["SessionName"] != "")
 			{
 				createSession();
-				$_SESSION["setCode"]='';
-				getSessions();
 			}
 			if(isset($_POST["sessionInput"]))
 			{
 				gotoSession();
-			}
-			if(isset($_POST["generateCode"]))
-			{	
-				generateAccessCode();
 			}
 			getSessions();
 
@@ -81,12 +73,22 @@ echo "Connected successfully";
 			function createSession()
 			{
 				global $conn;
+				if(!isset($_POST["AccessCode"]) || $_POST["AccessCode"] == "")
+				{
+					$_POST["AccessCode"] = rand(10000000, 99999999);
+				}
+				if(!accessCodeExists())
+				{
+					echo "</br>That access code is already used. (If you did not enter an access code, then just try creating this session again)</br>";
+					return;
+				}
 				$stmt = $conn->prepare("SELECT userId FROM user WHERE username=?");
 				$stmt->bind_param("s", $_SESSION["taid"]);
 				$stmt->execute();
 				$result = $stmt->get_result();
 				$result = $result->fetch_assoc();
 				$userId = $result["userId"];
+
 				$accessCode = $_POST["AccessCode"];
 				$sessionName = $_POST["SessionName"];
 				$stmt = $conn->prepare("INSERT INTO labsessions(
@@ -97,9 +99,23 @@ echo "Connected successfully";
 							userId)
 							VALUES(?, CURDATE(), ?, 1, ?)");
 				$stmt->bind_param("ssi", $accessCode, $sessionName, $userId);
-				$stmt->execute();
-				echo "</br> New session created";
+				if($stmt->execute())
+					echo "</br> New session created</br>";
+				else
+					echo "</br> Session not created</br>";
 			}
+
+			function accessCodeExists()
+			{
+				global $conn;
+				$stmt = $conn->prepare("SELECT * FROM labsessions WHERE accessCode = ?");
+				$stmt->bind_param("s", $_POST["AccessCode"]);
+				$stmt->execute();
+				if($stmt->num_rows == 0)
+					return TRUE;
+				else
+					return FALSE;
+			}		
 
 			//TODO FUNCTION
 			//get sessions that belong to this TA
@@ -141,11 +157,13 @@ echo "Connected successfully";
 			function gotoSession()
 			{
 				global $conn;
-				$sql = $conn->prepare("SELECT * FROM labsessions WHERE sessionId = ? and userId = ?");
+				$sql = $conn->prepare("SELECT * FROM labsessions WHERE accessCode = ? and userId = ?");
 				$sql->bind_param("ss", $_POST["sessionInput"],$_SESSION["userId"]);
 				$sql->execute();
 				$result = $sql->get_result();
 				$result = $result->fetch_assoc();
+				print_r($result);
+				echo "</br>Jimajong</br>";
 				$sql2 = $conn->prepare("SELECT * FROM user WHERE userId = ?");
 				$sql2->bind_param("s", $_SESSION["userId"]);
 				$sql2->execute();
@@ -158,22 +176,9 @@ echo "Connected successfully";
 					header("location: taSession.php");
 				}
 				else {
-					echo "lab session does not exist";
+					echo "Lab session does not exist";
 
 				}
-			}
-
-
-			//Generate random access code
-			function generateAccessCode(){
-				global $conn;
-				$quickcheck = $conn->prepare("SELECT * FROM labsessions WHERE userId = ?");
-				$quickcheck->bind_param("s", $_SESSION["userId"]);
-	    		$str = substr(str_shuffle(str_repeat($x='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ', ceil(7/strlen($x)))),1,7);
-	    		$quickcheck->execute();
-				$result = $quickcheck->get_result();
-				$_SESSION["setCode"] = $str;
-
 			}
 
 			$conn->close();
