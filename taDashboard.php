@@ -66,7 +66,29 @@ echo "Connected successfully";
 			{
 				gotoSession();
 			}
+			if(isset($_POST['delSessionID']) && $_POST['delSessionID'] != "")
+			{
+				removeSession();
+			}
 			getSessions();
+
+			function removeSession() //deletes session and question from both tables
+			{
+				//delete session in labsessions table
+				global $conn;
+				$stmt = $conn->prepare("DELETE FROM labsessions WHERE sessionId=?");
+				$stmt->bind_param("s", $_POST["delSessionID"]);
+				$stmt->execute();
+				$result = $stmt->get_result();
+			
+
+			//delete all questions of that session in questions table
+				$stmt = $conn->prepare("DELETE FROM questions WHERE sessionId=?");
+				$stmt->bind_param("s", $_POST["delSessionID"]);
+				$stmt->execute();
+				$result = $stmt->get_result();
+				
+			}			
 
 			//TODO FUNCTION
 			//create new session in the database
@@ -129,6 +151,7 @@ echo "Connected successfully";
 								<th>Date Created</th>
 								<th>Access Code</th>
 								<th>Status</th>
+								<th>Delete</th>
 							</tr>";
 
 				$sql = $conn->prepare("SELECT * FROM labsessions WHERE userId = ?");
@@ -144,6 +167,7 @@ echo "Connected successfully";
 					$tableHTML .=  "<td>" . $row['dateCreated'] . "</td>";
 					$tableHTML .=  "<td>" . $row['accessCode'] . "</td>";
 					$tableHTML .=  "<td>" . $row['status'] . "</td>";
+					$tableHTML .= "<td><form method=\"post\" action=\"taDashboard.php\"><input type=\"hidden\" name=\"delSessionID\" value=\"" . $row['sessionId'] ."\"><input type=\"submit\" name=\"Delete\" value=\"Delete\"></form></td>";
 					$tableHTML .=  "</tr>";
 				}
 				$tableHTML .= "</table>
