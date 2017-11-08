@@ -43,18 +43,18 @@ echo "Connected successfully";
 		<div class="newSession">
 			<form method="post" action="taDashboard.php">
 				<h2>Create a New Session</h2>
-				<input type="text" id="SessionName" name="SessionName" placeholder="Session Name">
+				<input type="text" size="25" maxlength="10" id="SessionName" name="SessionName" placeholder="Session Name">
 				</br>
-				<input type="text" id= "AccessCode" name="AccessCode" placeholder="Custom Access Code (optional)">
+				<input type="text" size="25" maxlength="10" id= "AccessCode" name="AccessCode" placeholder="Custom Access Code (optional)">
 				</br>
-				<input type="submit" name="Submit">
+				<input type="submit" name="Submit" value="Create Session">
 			</form>
 		</div>
 		<br>
 		<form method="post">
 			<h2>Access Session</h2>
-			<input type="text" id="sessionInput" name="sessionInput" placeholder="Access Code">
-			<input type="submit" id="submit" value="Submit">
+			<input type="text" size="25" maxlength="10" id="sessionInput" name="sessionInput" placeholder="Access Code">
+			<input type="submit" id="submit" value="View Session">
 		</form>
 		<?php
 
@@ -150,7 +150,6 @@ echo "Connected successfully";
 								<th>Session Id</th>
 								<th>Date Created</th>
 								<th>Access Code</th>
-								<th>Status</th>
 								<th>Delete</th>
 							</tr>";
 
@@ -166,8 +165,7 @@ echo "Connected successfully";
 					$tableHTML .=  "<td>" . $row['sessionId'] . "</td>";
 					$tableHTML .=  "<td>" . $row['dateCreated'] . "</td>";
 					$tableHTML .=  "<td>" . $row['accessCode'] . "</td>";
-					$tableHTML .=  "<td>" . $row['status'] . "</td>";
-					$tableHTML .= "<td><form method=\"post\" action=\"taDashboard.php\"><input type=\"hidden\" name=\"delSessionID\" value=\"" . $row['sessionId'] ."\"><input type=\"submit\" name=\"Delete\" value=\"Delete\"></form></td>";
+					$tableHTML .= "<td><form method=\"post\" action=\"taDashboard.php\" onsubmit=\"return confirm('are you sure?');\"><input type=\"hidden\" name=\"delSessionID\" value=\"" . $row['sessionId'] ."\"><input type=\"submit\" name=\"Delete\" value=\"Delete\"></form></td>";
 					$tableHTML .=  "</tr>";
 				}
 				$tableHTML .= "</table>
