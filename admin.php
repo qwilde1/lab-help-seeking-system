@@ -1,4 +1,5 @@
 <html>
+\\ADMIN PW IS: 12345
 	<HEAD>
 		<TITLE>TA Help Seek - Admin</TITLE>
 	</HEAD>
