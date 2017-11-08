@@ -165,7 +165,7 @@ echo "Connected successfully";
 					$tableHTML .=  "<td>" . $row['sessionId'] . "</td>";
 					$tableHTML .=  "<td>" . $row['dateCreated'] . "</td>";
 					$tableHTML .=  "<td>" . $row['accessCode'] . "</td>";
-					$tableHTML .= "<td><form method=\"post\" action=\"taDashboard.php\" onsubmit=\"return confirm('are you sure?');\"><input type=\"hidden\" name=\"delSessionID\" value=\"" . $row['sessionId'] ."\"><input type=\"submit\" name=\"Delete\" value=\"Delete\"></form></td>";
+					$tableHTML .= "<td><form method=\"post\" action=\"taDashboard.php\" onsubmit=\"return confirm('Are you sure you want to delete ".$row['sessionName']."?');\"><input type=\"hidden\" name=\"delSessionID\" value=\"" . $row['sessionId'] ."\"><input type=\"submit\" name=\"Delete\" value=\"Delete\"></form></td>";
 					$tableHTML .=  "</tr>";
 				}
 				$tableHTML .= "</table>
