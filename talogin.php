@@ -95,7 +95,7 @@
 						$stmt = "SELECT * FROM user WHERE username =\"admin\"";
 						$result = $conn->query($stmt);
 						$result = $result->fetch_assoc();
-						if($result["password"] == $_POST["tapw"])
+						if(password_verify($_POST["tapw"], $result["password"]))
 						{
 							$_SESSION["userId"]= $result["userId"];
 							$_SESSION["username"]= $result["username"];
