@@ -3,6 +3,7 @@
 ?>
 <HTML>
 	<HEAD>
+		<link rel="stylesheet" type="text/css" href="styles/taloginStyle.css">
 		<TITLE>TA Help Seek - TA Login Page</TITLE>
 	</HEAD>
 	<BODY>
