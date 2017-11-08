@@ -3,7 +3,7 @@
 ?>
 <HTML>
 	<HEAD>
-		<link rel="stylesheet" type="text/css" href="styles/taloginStyle.css">
+		<link rel="stylesheet" type="text/css" href="/styles/taloginStyle.css">
 		<TITLE>TA Help Seek - TA Login Page</TITLE>
 	</HEAD>
 	<BODY>
@@ -29,7 +29,9 @@
 			</tr>
 		</table>				
 		</form>
-
+		<form action="changePassword.php" method="post">
+			<input id="submit" type="submit" value="Change Password"/>
+		</form>
 		<?php
 			//DB info
 			$servername = "dbserver.engr.scu.edu";
