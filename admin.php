@@ -1,19 +1,25 @@
 <html>
 <!--ADMIN PW IS: 12345-->
 	<HEAD>
+		<link rel="stylesheet" type="text/css" href="./styles/adminStyle.css">
 		<TITLE>TA Help Seek - Admin</TITLE>
 	</HEAD>
 	<BODY>
-		<a align=right href="talogin.php">Go back to TA login page</a>
-		<h1 align=center>Admin Page</h1>		
-		<form action="admin.php" method="post">
-		<table align=center>
-			<tr><td><input id="newtaid" name="newtaid" type="text" placeholder="New TA Username"/></td></tr>
-			<tr><td><input id="newtapw" name="newtapw" type="password" placeholder="New TA Password"/></td></tr>
-			<tr><td><input id="pwconf" name="pwconf" type="password" placeholder="Confirm Password"/></td></tr>
-			<tr><td align=center><input id="submit" name="submit" type="submit" value="Submit"/></td></tr>
-		</table>		
-		</form>
+		<div class="tab-content">
+			<H1 ALIGN=CENTER>Admin Page</H1>
+			<ul class="tab-group">
+				<li class="tab active"><a align=right href="talogin.php">TA login</a></li>
+				<li class="tab"><a align=right href="studlogin.php">STUDENT login</a></li>
+			</ul>		
+			<form action="admin.php" method="post" class="top-row">
+			<table align=center>
+				<tr class="field-wrap"><td><input id="newtaid" name="newtaid" type="text" placeholder="New TA Username"/><span class="req"></span></td></tr>
+				<tr class="field-wrap"><td><input id="newtapw" name="newtapw" type="password" placeholder="New TA Password"/><span class="req"></span></td></tr>
+				<tr class="field-wrap"><td><input id="pwconf" name="pwconf" type="password" placeholder="Confirm Password"/><span class="req"></span></td></tr>
+				<tr class="field-wrap"><td align=center><input id="submit" name="submit" type="submit" value="Submit" class="button1 button1-block"/><span class="req"></span></td></tr>
+			</table>		
+			</form>
+		</div>
 		<?php
 			//DB info
 			$servername = "dbserver.engr.scu.edu";
