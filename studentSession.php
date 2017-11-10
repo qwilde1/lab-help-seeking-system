@@ -56,6 +56,9 @@ echo "Connected successfully";
 			{
 				$updatetext = "</br><b>Type in a question before you submit it.</b>";
 			}
+			echo "<h2>Announcements</h2>";
+			echo displayAnnouncements();
+			echo "<h2>Questions</h2>";
 			echo displayQuestions();
 			
 		?>
@@ -85,7 +88,7 @@ echo "Connected successfully";
 
 			function insertQuestion() {
 				global $conn;
-				$quickcheck = $conn->prepare("SELECT * FROM questions WHERE questionData = ? AND sessionId = ?");
+				$quickcheck = $conn->prepare("SELECT * FROM questions WHERE questionData = ? AND sessionId = ? ORDER BY whenAsked ASC");
 				$quickcheck->bind_param("si", $questionData, $sessionId);
 				$questionData = $_POST["questionData"];
 				$sessionId = $_SESSION["sessionId"];
@@ -126,7 +129,7 @@ echo "Connected successfully";
 								<th>Question</th>
 								<th>Resolve</th>
 							</tr>";
-				$sql = $conn->prepare("SELECT * FROM questions WHERE sessionId = ? and resolved = 0");
+				$sql = $conn->prepare("SELECT * FROM questions WHERE sessionId = ? and resolved = 0 and announcement = 0 ORDER BY whenAsked DESC");
 				$sql->bind_param("s", $_SESSION["sessionId"]);
 				$sql->execute();
 				$result = $sql->get_result();
@@ -145,6 +148,30 @@ echo "Connected successfully";
 					</div>";
 				if($result->num_rows == 0)
 					$tableHTML = "</br>There are no questions in this session yet";
+				return $tableHTML;
+			}
+			function displayAnnouncements()
+			{
+				global $conn;
+				$tableHTML = "<div class=\"announcements\" style=\"padding:20px\">
+						<table border=\"1\" style=\"max-width:900px;\">
+							<tr>
+								<th>Time</th>
+								<th>Announcement</th>
+							</tr>";
+				$sql = $conn->prepare("SELECT * FROM questions WHERE announcement = 1 ORDER BY whenAsked DESC");
+				$sql->execute();
+				$result = $sql->get_result();
+				while($row = $result->fetch_assoc()){
+					$tableHTML .=  "<tr>";
+					$tableHTML .=  "<td align=CENTER width=\"60\">" . $row['whenAsked'] . "</td>";
+					$tableHTML .=  "<td>" . $row['questionData'] . "</td>";
+					$tableHTML .=  "</tr>";
+				}
+				$tableHTML .= "</table>
+					</div>";
+				if($result->num_rows == 0)
+					$tableHTML = "";
 				return $tableHTML;
 			}
 

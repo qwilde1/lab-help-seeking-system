@@ -43,9 +43,9 @@ echo "Connected successfully";
 		<div class="newSession">
 			<form method="post" action="taDashboard.php">
 				<h2>Create a New Session</h2>
-				<input type="text" size="25" maxlength="10" id="SessionName" name="SessionName" placeholder="Session Name">
+				<input type="text" size="40" id="SessionName" name="SessionName" placeholder="Session Name">
 				</br>
-				<input type="text" size="25" maxlength="10" id= "AccessCode" name="AccessCode" placeholder="Custom Access Code (optional)">
+				<input type="text" size="40" maxlength="10" id= "AccessCode" name="AccessCode" placeholder="Custom Access Code (10 characters max, optional)">
 				</br>
 				<input type="submit" name="Submit" value="Create Session">
 			</form>
@@ -147,7 +147,6 @@ echo "Connected successfully";
 						<table border=\"1\">
 							<tr>
 								<th>Session Name</th>
-								<th>Session Id</th>
 								<th>Date Created</th>
 								<th>Access Code</th>
 								<th>Delete</th>
@@ -162,7 +161,6 @@ echo "Connected successfully";
 				while($row = $result->fetch_assoc()) {
 					$tableHTML .=  "<tr>";
 					$tableHTML .=  "<td>" . $row['sessionName'] . "</td>";
-					$tableHTML .=  "<td>" . $row['sessionId'] . "</td>";
 					$tableHTML .=  "<td>" . $row['dateCreated'] . "</td>";
 					$tableHTML .=  "<td>" . $row['accessCode'] . "</td>";
 					$tableHTML .= "<td><form method=\"post\" action=\"taDashboard.php\" onsubmit=\"return confirm('Are you sure you want to delete ".$row['sessionName']."?');\"><input type=\"hidden\" name=\"delSessionID\" value=\"" . $row['sessionId'] ."\"><input type=\"submit\" name=\"Delete\" value=\"Delete\"></form></td>";

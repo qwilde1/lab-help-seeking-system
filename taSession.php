@@ -41,14 +41,26 @@ echo "Connected successfully";
 		<h1>Hello <?php echo $_SESSION["username"] ?></h1>
 		<h2>Session: <?php echo $_SESSION["sessionName"] ?></h2>
 
+		<form method="post" action="taSession.php">
+			<textarea rows="5" cols="60" id="announcementData" name="announcementData" placeholder="Insert Announcement"></textarea></br>
+			<input type="submit" name="Submit" value="Announce"/>
+		</form>
+
 		<?php
 			if(isset($_POST['resolveID']) && $_POST['resolveID'] != "")
 			{
 				updateEntry();
 				$updatetext = "";
 			}
+			if(isset($_POST['announcementData']) && $_POST['announcementData'] != "")
+			{
+				insertAnnouncement();
+			}
+			echo "<h2>Announcements</h2>";
+			echo displayAnnouncements();
+			echo "<h2>Questions</h2>";
 			echo displayQuestions();
-
+			
 			function updateEntry(){
 				global $conn;
 				$quickcheck = $conn->prepare("UPDATE questions SET resolved = 1 where questionId= ?");
@@ -70,7 +82,7 @@ echo "Connected successfully";
 								<th>Question</th>
 								<th>Resolve</th>
 							</tr>";
-				$sql = $conn->prepare("SELECT * FROM questions WHERE sessionId = ? and resolved = 0");
+				$sql = $conn->prepare("SELECT * FROM questions WHERE sessionId = ? and resolved = 0 and announcement = 0 ORDER BY whenAsked ASC");
 				$sql->bind_param("s", $_SESSION["sessionId"]);
 				$sql->execute();
 				$result = $sql->get_result();
@@ -88,6 +100,54 @@ echo "Connected successfully";
 				return $tableHTML;
 			}
 
+			function displayAnnouncements()
+			{
+				global $conn;
+				$tableHTML = "<div class=\"announcements\" style=\"padding:20px\" >
+						<table border=\"1\" style=\"max-width:900px;\">
+							<tr>
+								<th>Time</th>
+								<th>Announcement</th>
+							</tr>";
+				$sql = $conn->prepare("SELECT * FROM questions WHERE announcement = 1 ORDER BY whenAsked DESC");
+				$sql->execute();
+				$result = $sql->get_result();
+				while($row = $result->fetch_assoc()){
+					$tableHTML .=  "<tr>";
+					$tableHTML .=  "<td align=CENTER width=\"150\">" . $row['whenAsked'] . "</td>";
+					$tableHTML .=  "<td>" . $row['questionData'] . "</td>";
+					$tableHTML .=  "</tr>";
+				}
+				$tableHTML .= "</table>
+					</div>";
+				if($result->num_rows == 0)
+					$tableHTML = "</br>You have yet to make an announcement.</br>";
+				return $tableHTML;
+			}
+
+
+			function insertAnnouncement() {
+				global $conn;
+				$sql = $conn->prepare("INSERT INTO questions 
+						(sessionId, 
+						questionData,
+						resolved,
+						studentName,
+						whenAsked,
+						announcement) 
+						VALUES (?,?,?,?,NOW(),1)");
+				$sql->bind_param("ssis", $sessionId, $questionData, $resolvedNum, $studentName);
+				
+				$sessionId = $_SESSION["sessionId"];
+				$questionData = $_POST["announcementData"];
+				$resolvedNum = 0;
+				$studentName = $_SESSION["username"];
+				
+				if($sql->execute())
+					echo "</br>Announcement posted";
+				else
+					echo "</br>Insertion failure";
+			}
 
 		?>
 
