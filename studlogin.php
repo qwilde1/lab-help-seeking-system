@@ -4,32 +4,35 @@
 ?>
 <HTML>
 	<HEAD>
-		<TITLE>TA Help Seek - Student Login Page</TITLE>
+		<link rel="stylesheet" type="text/css" href="./styles/studloginStyle.css">
 	</HEAD>
 	<BODY>
-		<a align=right href="talogin.php">Go to TA login page</a>
-		<H1 ALIGN=CENTER>Student Login Page</H1>
-
-		<form action="studlogin.php" method="post">
-		<table ALIGN=CENTER>
-			<tr>
-			  <td>
-			    <input id="accessCode" name="accessCode" type="text" placeholder="Access Code"/>
-			  </td>
-			</tr>
-			<tr>
-			  <td>
-			    <input id="studname" name="studname" type="text" placeholder="User Name"/>
-			  </td>
-			</tr>
-			<tr>
-			  <td align="center">
-			    <input id="submit" type="submit" value="Submit"/>
-			  </td>
-			</tr>
-		</table>				
-		</form>
-
+		<div class="tab-content">
+			<H1 ALIGN=CENTER>Student Login Page</H1>
+			<ul class="tab-group">
+				<li class="tab"><a align=right href="talogin.php">TA login</a></li>
+				<li class="tab active"><a align=right href="studlogin.php">STUDENT login</a></li>
+			</ul>
+			<form action="studlogin.php" method="post" class="top-row">
+			<table ALIGN=CENTER>
+				<tr class="field-wrap">
+				  <td>
+				    <input id="accessCode" name="accessCode" type="text" placeholder="Access Code"/><span class="req"></span>
+				  </td>
+				</tr>
+				<tr class="field-wrap">
+				  <td>
+				    <input id="studname" name="studname" type="text" placeholder="User Name"/><span class="req"></span>
+				  </td>
+				</tr>
+				<tr>
+				  <td align="center">
+				    <input id="submit" type="submit" value="Submit" class="button1 button1-block"/>
+				  </td>
+				</tr>
+			</table>				
+			</form>
+		</div>
 		<?php
 			//DB info
 			$servername = "dbserver.engr.scu.edu";
@@ -81,6 +84,5 @@
 			}
 			checkSessionID();
 		?>
-
 	</BODY>
 </HTML>
