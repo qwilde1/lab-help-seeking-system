@@ -3,35 +3,38 @@
 ?>
 <HTML>
 	<HEAD>
-		<link rel="stylesheet" type="text/css" href="/styles/taloginStyle.css">
-		<TITLE>TA Help Seek - TA Login Page</TITLE>
+		<link rel="stylesheet" type="text/css" href="./styles/taloginStyle.css">
 	</HEAD>
 	<BODY>
-		<a align=right href="studlogin.php">Go to STUDENT login page</a>
-		<H1 ALIGN=CENTER>TA Login Page</H1>
-
-		<form action="talogin.php" method="post">
-		<table ALIGN=CENTER>
-			<tr>
-			  <td>
-			    <input id="taid" name="taid" type="text" placeholder="TA User ID"/>
-			  </td>
-			</tr>
-			<tr>
-			  <td>
-			    <input id="tapw" name="tapw" type="password" placeholder="Password"/>
-			  </td>
-			</tr>
-			<tr>
-			  <td align="center">
-			    <input id="submit" type="submit" value="Submit"/>
-			  </td>
-			</tr>
-		</table>				
-		</form>
-		<form action="changePassword.php" method="post">
-			<input id="submit" type="submit" value="Change Password"/>
-		</form>
+		<div class="tab-content">
+			<H1 ALIGN=CENTER>TA Login Page</H1>
+			<ul class="tab-group">
+				<li class="tab active"><a align=right href="talogin.php">TA login</a></li>
+				<li class="tab"><a align=right href="studlogin.php">STUDENT login</a></li>
+			</ul>
+			<form action="talogin.php" method="post" class="top-row">
+			<table ALIGN=CENTER>
+				<tr class="field-wrap">
+				  <td>
+				    <input class="in" id="taid" name="taid" type="text" placeholder="TA User ID"/><span class="req"></span>
+				  </td>
+				</tr>
+				<tr class="field-wrap">
+				  <td>
+				    <input class="in" id="tapw" name="tapw" type="password" placeholder="Password"/><span class="req"></span>
+				  </td>
+				</tr>
+				<tr>
+				  <td align="center">
+				    <input id="submit" type="submit" value="Submit" class="button1 button1-block"/>
+				  </td>
+				</tr>
+			</table>				
+			</form>
+			<form action="changePassword.php" method="post">
+				<input id="submit" type="submit" value="Change Password" class="button2 button2-block"/>
+			</form>
+		</div>
 		<?php
 			//DB info
 			$servername = "dbserver.engr.scu.edu";
