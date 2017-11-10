@@ -13,24 +13,46 @@ echo "Connected successfully";
 ?>
 <html>
 	<HEAD>
-		<TITLE>TA Help Seek - Change Password</TITLE>
+		<link rel="stylesheet" type="text/css" href="./styles/passwordStyle.css">
 	</HEAD>
 	<body>
-	</br>
-	<a href="talogin.php">Return to Login Page</a>
-	<h1 ALIGN=CENTER>Change Password</h1>
-	<form method="post" action="changePassword.php">
-		<input type="text" id="username" name="username" placeholder="Username"/>
-		</br>
-		<input type="password" id="opw" name="opw" placeholder="Old Password"/>
-		</br>
-		<input type="password" id="npw" name="npw" placeholder="New Password"/>
-		</br>
-		<input type="password" id="cnpw" name="cnpw" placeholder="Confirm New Password"/>
-		</br>
-		<input type="submit" value="Change Password"/>
-		</br>
-	</form>
+		<div class="tab-content">
+			<H1 ALIGN=CENTER>Change Password</H1>
+			<ul class="tab-group">
+				<li class="tab active"><a align=right href="changePassword.php">Change Password</a></li>
+				<li class="tab"><a align=right href="talogin.php">TA login</a></li>
+			</ul>
+
+			<form method="post" action="changePassword.php" class="top-row">
+				<table ALIGN=CENTER>
+					<tr class="field-wrap">
+					  <td>
+					    <input type="text" id="username" name="username" placeholder="Username"/><span class="req"></span>
+					  </td>
+					</tr>
+					<tr class="field-wrap">
+					  <td>
+					    <input type="password" id="opw" name="opw" placeholder="Old Password"/><span class="req"></span>
+					  </td>
+					</tr>
+					<tr class="field-wrap">
+					  <td>
+					    <input type="password" id="npw" name="npw" placeholder="New Password"/><span class="req"></span>
+					  </td>
+					</tr>
+					<tr class="field-wrap">
+					  <td>
+					    <input type="password" id="cnpw" name="cnpw" placeholder="Confirm New Password"/><span class="req"></span>
+					  </td>
+					</tr>
+					<tr>
+					  <td align="center">
+					    <input type="submit" value="Change Password" class="button1 button1-block"/>
+					  </td>
+					</tr>
+				</table>	
+			</form>
+		</div>
 	<?php
 
 		if( isset($_POST["username"]) && $_POST["username"] != "" && $_POST["opw"] != "" && $_POST["npw"] != "" && $_POST["cnpw"] != "")
