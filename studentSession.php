@@ -164,7 +164,7 @@ echo "Connected successfully";
 				$result = $sql->get_result();
 				while($row = $result->fetch_assoc()){
 					$tableHTML .=  "<tr>";
-					$tableHTML .=  "<td align=CENTER width=\"60\">" . $row['whenAsked'] . "</td>";
+					$tableHTML .=  "<td align=CENTER width=\"150\">" . $row['whenAsked'] . "</td>";
 					$tableHTML .=  "<td>" . $row['questionData'] . "</td>";
 					$tableHTML .=  "</tr>";
 				}
