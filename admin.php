@@ -1,7 +1,7 @@
 <html>
 <!--ADMIN PW IS: 12345-->
 	<HEAD>
-		<link rel="stylesheet" type="text/css" href="./styles/adminStyle.css">
+		<link rel="stylesheet" type="text/css" href="./styles/loginStyle.css">
 		<TITLE>TA Help Seek - Admin</TITLE>
 	</HEAD>
 	<BODY>

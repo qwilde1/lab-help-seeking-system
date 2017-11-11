@@ -13,7 +13,7 @@ echo "Connected successfully";
 ?>
 <html>
 	<HEAD>
-		<link rel="stylesheet" type="text/css" href="./styles/passwordStyle.css">
+		<link rel="stylesheet" type="text/css" href="./styles/loginStyle.css">
 	</HEAD>
 	<body>
 		<div class="tab-content">

@@ -3,7 +3,7 @@
 ?>
 <HTML>
 	<HEAD>
-		<link rel="stylesheet" type="text/css" href="./styles/taloginStyle.css">
+		<link rel="stylesheet" type="text/css" href="./styles/loginStyle.css">
 	</HEAD>
 	<BODY>
 		<div class="tab-content">

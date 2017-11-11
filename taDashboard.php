@@ -12,10 +12,10 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if ($conn->connect_error) {
 	die("Connection failed: " . $conn->connect_error);
 } 
-echo "Connected successfully";
 ?>
 <html>
 	<head>
+		<link rel="stylesheet" type="text/css" href="./styles/dashboardStyle.css">
 		<script type="text/javascript">
 			function reload()
 			{
@@ -37,25 +37,20 @@ echo "Connected successfully";
 		</script>
 	</head>
 	<body onload="init()">
-		</br><a align=right href="talogin.php">Return to TA login page</a>
-		<h1>Hello <?php echo $_SESSION["taid"]; ?></h1>
-
+		<div class="top-bar">
+			<h1 class="dashboard"><?php echo $_SESSION["taid"]; ?> Dashboard</h1>
+			<a class="backButton" align=right href="talogin.php">Return to TA login page</a>
+		</div>
 		<div class="newSession">
 			<form method="post" action="taDashboard.php">
 				<h2>Create a New Session</h2>
 				<input type="text" size="40" id="SessionName" name="SessionName" placeholder="Session Name">
 				</br>
-				<input type="text" size="40" maxlength="10" id= "AccessCode" name="AccessCode" placeholder="Custom Access Code (10 characters max, optional)">
+				<input type="text" size="40" maxlength="10" id= "AccessCode" name="AccessCode" placeholder="Access Code (10 char max, optional)">
 				</br>
-				<input type="submit" name="Submit" value="Create Session">
+				<input type="submit" name="Submit" value="Create Session" class="button1 button1-block">
 			</form>
 		</div>
-		<br>
-		<form method="post">
-			<h2>Access Session</h2>
-			<input type="text" size="25" maxlength="10" id="sessionInput" name="sessionInput" placeholder="Access Code">
-			<input type="submit" id="submit" value="View Session">
-		</form>
 		<?php
 
 			if(isset($_POST["SessionName"]) && $_POST["SessionName"] != "")
@@ -143,8 +138,8 @@ echo "Connected successfully";
 			//get sessions that belong to this TA
 			function getSessions() {
 				global $conn;
-				$tableHTML = "<div class=\"sessions\" style=\"padding:20px\">
-						<table border=\"1\">
+				$tableHTML = "<div class=\"sessions\">
+						<table>
 							<tr>
 								<th>Session Name</th>
 								<th>Date Created</th>
@@ -204,6 +199,13 @@ echo "Connected successfully";
 			$conn->close();
 
 		?>
+		<div class="accessSession">
+			<form method="post">
+				<h2>Access Session</h2>
+				<input type="text" size="25" maxlength="10" id="sessionInput" name="sessionInput" placeholder="Access Code">
+				<input type="submit" id="submit" value="View Session">
+			</form>
+		</div>
 
 	</body>
 </html>
