@@ -1,0 +1,238 @@
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+html {
+  overflow: auto;
+}
+
+body {
+  background: #F6F6F6;
+  font-family: 'Titillium Web', sans-serif;
+  width: 100%;
+}
+.top-bar {
+  width: 100%;
+  height: 10%;
+  padding: 5px;;
+  background: #A4243B;
+  color: #333333;
+  border-radius:2px;
+  box-shadow: 0 4px 10px 4px #DFDBD4;
+  position: relative;
+}
+.backButton {
+  position: relative;
+  top: 30%;
+  right: 5%;
+  float: right;
+  color: #a0b3b0;
+  margin: 35px 10px 0 0;
+  text-decoration: none;
+  font-size: 20px;
+  cursor: pointer;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
+}
+.top-bar a:hover {
+ color: #FCD9BA;
+
+}
+.top-bar h1, h2 {
+  float: left;
+  position: relative;
+}
+.top-bar h1 {
+  position: relative;
+  left: 5%;
+}
+.top-bar h2 {
+  position: relative;
+  top: 100%;
+  left: 15%;
+}
+.queue, .qTitle {
+  position: relative;
+  float: left;
+  width: 50%;
+}
+.announcements, .aTitle {
+  position: relative;
+  top: 100px;
+  float: right;
+  width: 50%;
+}
+
+
+.announcements {
+  font-family: 'Titillium Web', sans-serif;
+  text-align: left;
+  border-collapse: collapse;
+}
+.announcements th {
+  font-size: 13px;
+  font-weight: normal;
+  padding: 8px;
+  background: #DFDBD4;
+  border: transparent;
+  color: #333333;
+}
+.announcements td {
+  font-size: 12px;
+  font-weight: normal;
+  padding: 4px;
+  background: #EFEAE1;
+  border: transparent;
+  color: #333333;
+}
+
+.insertAnnouncement {
+  float: right;
+  width: 50%;
+}
+.insertAnnouncement {
+  position: relative;
+  top: 15%;
+  right: 7%;
+}
+
+.insertAnnouncement {
+  font-size: 15px;
+  display: block;
+  width: 40%;
+  height: 30%;
+  background: #DFDBD4;
+  border: 2px solid #DFDBD4;
+  color: #333333;
+  border-radius: 0;
+  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .25s ease, box-shadow .25s ease;
+
+}
+
+
+.insertAnnouncement textarea {
+  font-size: 13px;
+  display: block;
+  width: 80%;
+  height: 70%;
+  margin: 15px 0 5px 40px;
+  background: none;
+  background-image: none;
+  border: 2px solid #CCCCCC;
+  color: #333333;
+  border-radius: 0;
+  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+.insertAnnouncement textarea:focus {
+  outline: 0;
+  border-color: #333333;
+}
+
+.insertAnnouncement textarea {
+  border: 1px solid #333333;
+  resize: vertical;
+}
+.insertAnnouncement #submit {
+  margin: 15px 0 0 95px;
+  border: 0;
+  outline: none;
+  border-radius: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  background: #A4243B;
+  color: #a0b3b0;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  -webkit-appearance: none;
+}
+.insertAnnouncement #submit:hover {
+  color: #FCD9BA;
+}
+
+.insertAnnouncement #submit {
+  display: block;
+  width: 50%;
+  height: 10%;
+}
+
+
+.message {
+  position: relative;
+  top: 100px;
+  border: 2px solid transparent;
+  background-color: #DFDBD4;
+  border-radius: 5px;
+  padding: 10px;
+  display: block;
+  width: 300%;
+  height: 30%;
+  margin: 0 0 10px 10px;
+}
+.message .resolve {
+  position: relative;
+  bottom: 20px;
+  left: 1200%;
+  cursor: pointer;
+  color: white;
+  border: 1px solid #AEAEAE;
+  border-radius: 30px;
+  background: white;
+  font-size: 31px;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 0px;
+  padding: 10px 10px;
+  content: "x";
+}
+
+
+.message::after {
+  content: "";
+  clear: both;
+  display: block;
+}
+
+.message .mname {
+  position: relative;
+  float: left;
+  font-size: 16px;
+  color: #333333;
+  top: 10;
+  right: 0;
+
+}
+
+.message .mquestion {
+  position: relative;
+  font-size: 14px;
+  color: #333333;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
