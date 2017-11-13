@@ -134,7 +134,9 @@ if ($conn->connect_error) {
 								<th>Time</th>
 								<th>Announcement</th>
 							</tr>";
-				$sql = $conn->prepare("SELECT * FROM questions WHERE announcement = 1 ORDER BY whenAsked DESC");
+				$sql = $conn->prepare("SELECT * FROM questions WHERE announcement = 1 AND sessionId = ? ORDER BY whenAsked DESC");
+				$sql->bind_param("s", $sessionId);
+				$sessionId = $_SESSION["sessionId"];
 				$sql->execute();
 				$result = $sql->get_result();
 				while($row = $result->fetch_assoc()){
