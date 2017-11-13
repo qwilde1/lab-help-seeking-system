@@ -4,12 +4,14 @@
 
 html {
   overflow: auto;
+  height: 100%;
 }
 
 body {
   background: #F6F6F6;
   font-family: 'Titillium Web', sans-serif;
   width: 100%;
+  height: 100%;
 }
 .top-bar {
   width: 100%;
@@ -58,9 +60,10 @@ body {
 }
 .announcements, .aTitle {
   position: relative;
-  top: 100px;
+  top: 10%;
   float: right;
   width: 50%;
+  left: 5%;
 }
 
 
@@ -93,7 +96,7 @@ body {
 .insertAnnouncement {
   position: relative;
   top: 15%;
-  right: 7%;
+  right: 8%;
 }
 
 .insertAnnouncement {
@@ -168,28 +171,19 @@ body {
   border-radius: 5px;
   padding: 10px;
   display: block;
-  width: 300%;
-  height: 30%;
+  width: 500px;
+  height: 80px;
   margin: 0 0 10px 10px;
 }
 .message .resolve {
-  position: relative;
-  bottom: 20px;
-  left: 1200%;
-  cursor: pointer;
-  color: white;
-  border: 1px solid #AEAEAE;
-  border-radius: 30px;
-  background: white;
-  font-size: 31px;
-  font-weight: bold;
-  display: inline-block;
-  line-height: 0px;
-  padding: 10px 10px;
-  content: "x";
+  position: absolute;
+  bottom: 80%;
+  left: 97%;
+  font-size: 13px;
+  color: #333333;
+  background-color: white;
+  border-radius: 50%;
 }
-
-
 .message::after {
   content: "";
   clear: both;
@@ -197,22 +191,95 @@ body {
 }
 
 .message .mname {
-  position: relative;
+  position: absolute;
   float: left;
   font-size: 16px;
   color: #333333;
-  top: 10;
-  right: 0;
+  top: 10%;
 
 }
 
 .message .mquestion {
-  position: relative;
+  position: absolute;
   font-size: 14px;
   color: #333333;
+  top: 25px;
+  left: 10%;
+  word-wrap: break-word;
+}
+
+.studentInput {
+  float: right;
+  width: 50%;
+}
+.studentInput {
+  position: relative;
+  top: 15%;
+  right: 8%;
+}
+
+.studentInput {
+  font-size: 15px;
+  display: block;
+  width: 40%;
+  height: 15%;
+  background: #DFDBD4;
+  border: 2px solid #DFDBD4;
+  color: #333333;
+  border-radius: 0;
+  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .25s ease, box-shadow .25s ease;
+
 }
 
 
+.studentInput .inputText {
+  font-size: 13px;
+  display: block;
+  width: 80%;
+  height: 40%;
+  margin: 15px 0 5px 40px;
+  background: none;
+  background-image: none;
+  border: 2px solid #CCCCCC;
+  color: #333333;
+  border-radius: 0;
+  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+.studentInput .inputText:focus {
+  outline: 0;
+  border-color: #333333;
+}
+
+.studentInput .inputText {
+  border: 1px solid #333333;
+  resize: vertical;
+}
+.studentInput .submitButton {
+  margin: 15px 0 0 95px;
+  border: 0;
+  outline: none;
+  border-radius: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  background: #A4243B;
+  color: #a0b3b0;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  -webkit-appearance: none;
+}
+.studentInput .submitButton:hover {
+  color: #FCD9BA;
+}
+
+.studentInput .submitButton {
+  display: block;
+  width: 50%;
+  height: 20%;
+}
 
 
 

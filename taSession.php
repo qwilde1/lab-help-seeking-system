@@ -61,6 +61,9 @@ if ($conn->connect_error) {
 				$quickcheck = $conn->prepare("UPDATE questions SET resolved = 1 where questionId= ?");
 				$quickcheck->bind_param("s", $questionId);
 				$questionId = $_POST["resolveID"];
+         			if($quickcheck->execute()){
+					echo "";
+				}
 				
 			}		
 
@@ -77,7 +80,7 @@ if ($conn->connect_error) {
 					$tableHTML .=  "<tr class=\"message\">";
 					$tableHTML .=  "<td class='mname'>" . $row['studentName'] . "</td>";
 					$tableHTML .=  "<td class='mquestion'>" . $row['questionData'] . "</td>";
-					$tableHTML .= "<td><form method=\"post\" action=\"taSession.php\"><input type=\"hidden\" name=\"resolveID\" value=\"" . $row['questionId'] ."\"><input class=\"resolve\" type=\"submit\" name=\"resolve\" value=\"\"></form></td>";
+					$tableHTML .= "<td><form method=\"post\" action=\"taSession.php\"><input type=\"hidden\" name=\"resolveID\" value=\"" . $row['questionId'] ."\"><input class=\"resolve\" type=\"submit\" name=\"resolve\" value=\"x\"></form></td>";
 					$tableHTML .=  "</tr>";
 				}
 				$tableHTML .= "</table>
@@ -108,7 +111,7 @@ if ($conn->connect_error) {
 				$tableHTML .= "</table>
 					</div>";
 				if($result->num_rows == 0)
-					$tableHTML = "You have yet to make an announcement.</br>";
+					$tableHTML = "";
 				return $tableHTML;
 			}
 
@@ -130,10 +133,7 @@ if ($conn->connect_error) {
 				$resolvedNum = 0;
 				$studentName = $_SESSION["username"];
 				
-				if($sql->execute())
-					echo "</br>Announcement posted";
-				else
-					echo "</br>Insertion failure";
+				$sql->execute();
 			}
 
 		?>
