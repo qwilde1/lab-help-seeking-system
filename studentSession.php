@@ -104,7 +104,7 @@ if ($conn->connect_error) {
 				global $conn;
 				$tableHTML = "<div class=\"queue\">
 						<table>";
-				$sql = $conn->prepare("SELECT * FROM questions WHERE sessionId = ? and resolved = 0 and announcement = 0 ORDER BY whenAsked DESC");
+				$sql = $conn->prepare("SELECT * FROM questions WHERE sessionId = ? and resolved = 0 and announcement = 0 ORDER BY whenAsked ASC");
 				$sql->bind_param("s", $_SESSION["sessionId"]);
 				$sql->execute();
 				$result = $sql->get_result();
