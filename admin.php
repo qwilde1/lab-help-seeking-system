@@ -31,9 +31,9 @@
 
 			// Check connection
 			if ($conn->connect_error) {
-			    die("Connection failed: " . $conn->connect_error);
+			    die("Connection to server failed: " . $conn->connect_error);
 			} 
-			echo "</br>Connected to Database Server";
+			//echo "</br>Connected to Database Server";
 	
 			function passwordsMatch()
 			{

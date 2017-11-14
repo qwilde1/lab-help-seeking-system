@@ -45,9 +45,9 @@
 
 			// Check connection
 			if ($conn->connect_error) {
-			    die("Connection failed: " . $conn->connect_error);
+			    die("Connection to server failed: " . $conn->connect_error);
 			} 
-			echo "Connected to Database Server";
+			//echo "Connected to Database Server";
 			
 			//Check login info, if legitimate, go on to TA dashboard
 			function checkSessionID()
@@ -78,7 +78,7 @@
 				}
 				else
 				{
-					echo "</br>Please enter the session ID and username.</br>";
+					//echo "</br>Please enter the session ID and username.</br>";
 				}
 
 			}
