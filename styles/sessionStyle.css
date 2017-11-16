@@ -25,11 +25,10 @@ body {
 }
 .backButton {
   position: relative;
-  top: 30%;
-  right: 5%;
+  margin-top: 3%;
+  margin-right: 5%;
   float: right;
   color: #a0b3b0;
-  margin: 35px 10px 0 0;
   text-decoration: none;
   font-size: 20px;
   cursor: pointer;
@@ -46,12 +45,12 @@ body {
 }
 .top-bar h1 {
   position: relative;
-  left: 5%;
+  left: 2%;
 }
 .top-bar h2 {
   position: relative;
   top: 100%;
-  left: 15%;
+  left: 25%;
 }
 .queue, .qTitle {
   position: relative;
@@ -60,7 +59,8 @@ body {
 }
 .announcements, .aTitle {
   position: relative;
-  top: 10%;
+  margin-top: 13%;
+  margin-right: -10%;
   float: right;
   width: 50%;
   left: 5%;
@@ -91,12 +91,11 @@ body {
 
 .insertAnnouncement {
   float: right;
-  width: 50%;
 }
 .insertAnnouncement {
   position: relative;
-  top: 15%;
-  right: 8%;
+  margin-top: 10%;
+  right: -35%;
 }
 
 .insertAnnouncement {
@@ -119,7 +118,7 @@ body {
   display: block;
   width: 80%;
   height: 70%;
-  margin: 15px 0 5px 40px;
+  margin: 15px 0 5px 47px;
   background: none;
   background-image: none;
   border: 2px solid #CCCCCC;
@@ -138,7 +137,6 @@ body {
   resize: vertical;
 }
 .insertAnnouncement #submit {
-  margin: 15px 0 0 95px;
   border: 0;
   outline: none;
   border-radius: 0;
@@ -158,8 +156,9 @@ body {
 
 .insertAnnouncement #submit {
   display: block;
+  margin: 5px 0 0 120px;
   width: 50%;
-  height: 10%;
+  height: 12%;
 }
 
 
@@ -215,7 +214,7 @@ body {
 .studentInput {
   position: relative;
   top: 15%;
-  right: 8%;
+  right: 6%;
 }
 
 .studentInput {
@@ -238,7 +237,7 @@ body {
   display: block;
   width: 80%;
   height: 40%;
-  margin: 15px 0 5px 40px;
+  margin: 15px 0 5px 45px;
   background: none;
   background-image: none;
   border: 2px solid #CCCCCC;
@@ -257,7 +256,7 @@ body {
   resize: vertical;
 }
 .studentInput .submitButton {
-  margin: 15px 0 0 95px;
+  margin: 15px 0 0 120px;
   border: 0;
   outline: none;
   border-radius: 0;
@@ -278,7 +277,7 @@ body {
 .studentInput .submitButton {
   display: block;
   width: 50%;
-  height: 20%;
+  height: 25%;
 }
 
 
