@@ -15,7 +15,6 @@ if ($conn->connect_error) {
 ?>
 <html>
 	<head>
-		<meta http-equiv="refresh" content="10">
 		<link rel="stylesheet" type="text/css" href="./styles/sessionStyle.css">
 		<script type="text/javascript">
 			function reload()
