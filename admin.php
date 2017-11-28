@@ -65,17 +65,17 @@
 					$stmt->execute();
 					echo "</br><b>New TA added</b>";
 					//insert default session for this ta
-					$stmt = $conn->prepare("SELECT userId FROM user WHERE username=?");
-					$stmt->bind_param("s", $newta);
-					$stmt->execute();
-					$result = $stmt->get_result();
-					$result = $result->fetch_assoc();
-					$userId = $result["userId"];
-					$acCode = "" . rand(0,time());
-					$stmt = $conn->prepare("INSERT INTO labsessions(accessCode, dateCreated, sessionName, status, userId) VALUES(\"".$acCode."\", CURDATE(), \"Default Session\", 1, ?)");
-					$stmt->bind_param("s", $userId);
-					$stmt->execute();
-					echo "</br> Default session access code for new TA: " . $acCode;
+					//$stmt = $conn->prepare("SELECT userId FROM user WHERE username=?");
+					//$stmt->bind_param("s", $newta);
+					//$stmt->execute();
+					//$result = $stmt->get_result();
+					//$result = $result->fetch_assoc();
+					//$userId = $result["userId"];
+					//$acCode = "" . rand(0,time());
+					//$stmt = $conn->prepare("INSERT INTO labsessions(accessCode, dateCreated, sessionName, status, userId) VALUES(\"".$acCode."\", CURDATE(), \"Default Session\", 1, ?)");
+					//$stmt->bind_param("s", $userId);
+					//$stmt->execute();
+					//echo "</br> Default session access code for new TA: " . $acCode;
 					
 				}
 			}
