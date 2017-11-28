@@ -32,7 +32,13 @@
 			</table>				
 			</form>
 			<form action="changePassword.php" method="post">
+			<table align=center>
+				<tr>
+				<td align="center">
 				<input id="submit" type="submit" value="Change Password" class="button2 button2-block"/>
+				</td>
+				</tr>
+			</table>
 			</form>
 		</div>
 		<?php
