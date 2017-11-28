@@ -120,7 +120,7 @@ textarea {
   border: 0;
   outline: none;
   border-radius: 0;
-  padding: 15px 0;
+  padding: 15px 10px;
   font-size: 1rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -147,7 +147,7 @@ textarea {
   border: 0;
   outline: none;
   border-radius: 0;
-  padding: 10px 0;
+  padding: 15px 10px;
   font-size: 1rem;
   font-weight: 600;
   text-transform: uppercase;

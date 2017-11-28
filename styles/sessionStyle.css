@@ -60,7 +60,7 @@ body {
 .announcements, .aTitle {
   position: relative;
   margin-top: 13%;
-  margin-right: -10%;
+  
   float: right;
   width: 50%;
   left: 5%;
@@ -93,9 +93,9 @@ body {
   float: right;
 }
 .insertAnnouncement {
-  position: relative;
-  margin-top: 30%;
-  right: -15%;
+  position: static;
+  margin-top: 10%;
+  
 }
 
 .insertAnnouncement {
