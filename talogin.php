@@ -16,7 +16,7 @@
 			<table ALIGN=CENTER>
 				<tr class="field-wrap">
 				  <td>
-				    <input class="in" id="taid" name="taid" type="text" placeholder="TA User ID"/><span class="req"></span>
+				    <input class="in" id="taid" name="taid" type="text" placeholder="TA User ID" autofocus="autofocus"/><span class="req"></span>
 				  </td>
 				</tr>
 				<tr class="field-wrap">

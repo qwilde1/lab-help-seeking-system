@@ -17,7 +17,7 @@
 			<table ALIGN=CENTER>
 				<tr class="field-wrap">
 				  <td>
-				    <input id="accessCode" name="accessCode" type="text" placeholder="Access Code"/><span class="req"></span>
+				    <input id="accessCode" name="accessCode" type="text" placeholder="Access Code" autofocus="autofocus"/><span class="req"></span>
 				  </td>
 				</tr>
 				<tr class="field-wrap">

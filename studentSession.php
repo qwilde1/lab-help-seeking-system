@@ -15,7 +15,7 @@ if ($conn->connect_error) {
 ?>
 <html>
 	<head>
-		<meta http-equiv="refresh" content="10"
+		<meta http-equiv="refresh" content="10">
 		<link rel="stylesheet" type="text/css" href="./styles/sessionStyle.css">
 		<script type="text/javascript">
 			function reload()
@@ -156,7 +156,7 @@ if ($conn->connect_error) {
 		?>
 		<div class="studentInput">
 			<form method="post" action="studentSession.php">
-				<input class="inputText" type="text" id="questionData" name="questionData" placeholder="Insert Question">
+				<input class="inputText" type="text" id="questionData" name="questionData" placeholder="Insert Question" autofocus="autofocus">
 				<input class="submitButton" type="submit" name="Submit" value="Submit Question">
 			</form>
 			
