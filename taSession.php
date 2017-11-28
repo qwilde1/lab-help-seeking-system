@@ -54,8 +54,9 @@ if ($conn->connect_error) {
 			{
 				insertAnnouncement();
 			}
+			echo displayQuestions();			
 			echo displayAnnouncements();
-			echo displayQuestions();
+			//echo displayQuestions();
 			
 			function updateEntry(){
 				global $conn;
@@ -86,8 +87,8 @@ if ($conn->connect_error) {
 				}
 				$tableHTML .= "</table>
 					</div>";
-				if($result->num_rows == 0)
-					$tableHTML = "";
+				//if($result->num_rows == 0)
+					//$tableHTML = "";
 				return $tableHTML;
 			}
 
@@ -113,8 +114,8 @@ if ($conn->connect_error) {
 				}
 				$tableHTML .= "</table>
 					</div>";
-				if($result->num_rows == 0)
-					$tableHTML = "";
+				//if($result->num_rows == 0)
+				//	$tableHTML = "";
 				return $tableHTML;
 			}
 
